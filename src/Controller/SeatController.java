@@ -1,3 +1,5 @@
+package Controller;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -5,13 +7,17 @@ import java.util.ArrayList;
 public class SeatController{
 	
 	private ArrayList<String> availableSeats;
-	private SeatView seatView;
+	/*private SeatView seatView;
+
+	 */
 	
 	
-	public SeatController(ArrayList<String> availableSeats, SeatView seatView) {
+	public SeatController(ArrayList<String> availableSeats) {
 		this.availableSeats = availableSeats;
-		this.seatView = seatView;
+		/* this.seatView = seatView;
 		this.seatView.addActionListener(new SeatListener());
+
+	 */
 	}
 
 	public void chooseSeat() {
@@ -30,7 +36,7 @@ public class SeatController{
 		this.availableSeats = availableSeats;
 	}
 
-	public SeatView getSeatView() {
+/*	public SeatView getSeatView() {
 		return seatView;
 	}
 
@@ -39,11 +45,13 @@ public class SeatController{
 	}
 
 
-	public class SeatListener implements ActionListener{
+ */
+
+/*	public class SeatListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
 			chooseSeat();
 		}
-
+*/
 	}
 

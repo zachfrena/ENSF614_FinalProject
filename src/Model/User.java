@@ -46,4 +46,9 @@ public class User {
     public void setRegistered(boolean registered) {
         isRegistered = registered;
     }
-}
+
+    @Override
+   public String toString() {
+        return (this.fName+" "+this.lName);
+    }
+ }

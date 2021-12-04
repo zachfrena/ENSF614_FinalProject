@@ -1,0 +1,34 @@
+import Controller.*;
+import Model.Ticket;
+import Model.User;
+
+import java.util.ArrayList;
+
+public class Test {
+
+    public static void main(String[] args){
+        System.out.println("test for final project");
+        DBController databaseController = new DBController();
+        SignUpController signUpController = new SignUpController(databaseController);
+        LoginController loginController = new LoginController(databaseController);
+        loginController.login("dunefan");
+        MainMenuController mainMenuController = new MainMenuController(loginController.getLoggedInUser());
+        MovieController movieController = new MovieController();
+        TicketController ticketController = new TicketController();
+        MainApp app = new MainApp(signUpController,mainMenuController,movieController,ticketController,databaseController,loginController);
+
+        //loginController.login("dunefan");
+//        User testUser = new User("RSmith","Ryan","Smith","rs@gmail.com",true,200);
+        System.out.println(loginController.getLoggedInUser());
+
+
+        mainMenuController.displayAccountBalance();
+        mainMenuController.addBalance(loginController.getLoggedInUser(), 20);
+        mainMenuController.displayAccountBalance();
+        databaseController.setToNonRegistered(get)
+
+        signUpController.createUser();
+        loginController.login("z1");
+    }
+
+}

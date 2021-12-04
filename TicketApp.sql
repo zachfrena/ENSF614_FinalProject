@@ -54,14 +54,15 @@ CREATE TABLE TICKET (
 	TicketID		integer not null,
     ShowingID		integer not null,
     Username		varchar(15) not null,
+    Seat			integer not null,
     primary key(TicketID),
     foreign key (ShowingID) references SHOWING(ShowingID),
     foreign key (Username) references USERS(Username)
 );
 
-INSERT INTO TICKET(TicketID, ShowingID, Username)
+INSERT INTO TICKET(TicketID, ShowingID, Username, Seat)
 VALUES
-(1, 5, "dunefan"),
-(2, 6, "kelten2"),
-(3, 8, "ghostbuster");
+(1, 5, "dunefan", 1),
+(2, 6, "kelten2", 2),
+(3, 8, "ghostbuster", 3);
     

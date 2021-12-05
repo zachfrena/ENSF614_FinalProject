@@ -18,8 +18,8 @@ public class Test {
         loginController.login("dunefan");
         MainMenuController mainMenuController = new MainMenuController(loginController.getLoggedInUser());
         MovieController movieController = new MovieController();
-        TicketController ticketController = new TicketController();
-        MainApp app = new MainApp(signUpController,mainMenuController,movieController,ticketController,databaseController,loginController);
+       // TicketController ticketController = new TicketController();
+        MainApp app = new MainApp(signUpController,mainMenuController,movieController,databaseController,loginController);
 
         //loginController.login("dunefan");
 //        User testUser = new User("RSmith","Ryan","Smith","rs@gmail.com",true,200);
@@ -32,7 +32,8 @@ public class Test {
         databaseController.setToNonRegistered(databaseController.searchUser("dunefan"));
 
 //        signUpController.createUser();
-        loginController.login("z1");
+        //loginController.login("z1");
+        System.out.println(databaseController.readAllShowings());
 
 
     }

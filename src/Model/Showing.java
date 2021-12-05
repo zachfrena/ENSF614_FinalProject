@@ -9,38 +9,36 @@ import java.util.Date;
 public class Showing {
 
     private int showingID;
-    private int movieID;
-    private String movieName;
     private Date showingDate;
     private Time showingTime;
     private String theatre;
-    private ArrayList<Seat> seats;
+    private Movies movie;
 
-    public Showing(int showingID, int movieID, Date showingDate, Time showingTime, String theatre, ArrayList<Seat> seats) {
+    public Showing(int showingID, Movies movie, Date showingDate, Time showingTime, String theatre) {
         this.showingID = showingID;
-        this.movieID = movieID;
         this.showingDate = showingDate;
         this.showingTime = showingTime;
         this.theatre = theatre;
-        this.seats = seats;
+        this.movie = movie;
     }
 
-    public String getMovieName(int movieID) {
-        return movieName;
-       // DBController db = new DBController();
-        //return db.readMovies(movieID);
+    public Movies getMovie() {
+        return movie;
     }
 
-
-    public void displaySeats(){
-
+    public Seat chooseSeat() {
+        return null;
+}
+    public int getShowingID() {
+        return showingID;
     }
 
-    public void displayShowtime(){
-
+    public int getMovieId() {
+        return movie.getMovieId();
     }
 
-    public void setSeat(ArrayList<Seat> seat) {
-        this.seats = seat;
+    @Override
+    public String toString() {
+        return "\nShowing: " + movie.getTitle() + "\nDate: " + showingDate + "\nTime: " + showingTime;
     }
 }

@@ -55,7 +55,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-        "Ticket ID: " + ticketId + "\nMovie: " + showing.get
+       return "Ticket ID: " + ticketId + "\nMovie: " + showing.getMovie().getTitle() + "\nSeat: " + seats;
     }
 }
 

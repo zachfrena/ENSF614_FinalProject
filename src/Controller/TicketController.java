@@ -20,11 +20,11 @@ public class TicketController {
         */
     }
 
-    public Ticket selectTicket(){
-        Ticket ticket = new Ticket(4, "kelten2", 4);
-        this.databaseController.saveTicketToDB(ticket);
-        int ticketID, Showing showing, User user, int seat
-    }
+//    public Ticket selectTicket(){
+//        Ticket ticket = new Ticket(4, "kelten2", 4);
+//        this.databaseController.saveTicketToDB(ticket);
+//        int ticketID, Showing showing, User user, int seat
+//    }
 
 
 

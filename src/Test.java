@@ -8,9 +8,13 @@ public class Test {
 
     public static void main(String[] args){
         System.out.println("test for final project");
+
+        //***-----------creating controllers----------------***
         DBController databaseController = new DBController();
         SignUpController signUpController = new SignUpController(databaseController);
         LoginController loginController = new LoginController(databaseController);
+
+        //***-----------testing log-in with existing user----------------***
         loginController.login("dunefan");
         MainMenuController mainMenuController = new MainMenuController(loginController.getLoggedInUser());
         MovieController movieController = new MovieController();
@@ -25,10 +29,12 @@ public class Test {
         mainMenuController.displayAccountBalance();
         mainMenuController.addBalance(loginController.getLoggedInUser(), 20);
         mainMenuController.displayAccountBalance();
-        databaseController.setToNonRegistered(get)
+        databaseController.setToNonRegistered(databaseController.searchUser("dunefan"));
 
-        signUpController.createUser();
+//        signUpController.createUser();
         loginController.login("z1");
+
+
     }
 
 }

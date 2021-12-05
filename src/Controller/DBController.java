@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.ExistingUsersList;
 import Model.User;
 
 import java.sql.*;
@@ -9,10 +10,11 @@ public class DBController implements DBLoginDetails {
     private Connection con;
     private ResultSet res;
     protected PreparedStatement theStatement;
-    private ArrayList<User> existingUsers;
+    private ExistingUsersList existingUsersList;
 
     public DBController() {
         establishConnection();
+//
     }
 
     public void establishConnection() {
@@ -45,6 +47,17 @@ public class DBController implements DBLoginDetails {
         return res;
     }
 
+    public ResultSet readMovies(int movieId) {
+        try {
+            String query = "SELECT * FROM MOVIE WHERE MovieID = " + movieId + ";";
+            theStatement = con.prepareStatement(query);
+            res = theStatement.executeQuery();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
     public ResultSet saveToDB(User user) {
         String username = user.getUsername();
         String fname = user.getFirstName();
@@ -57,6 +70,27 @@ public class DBController implements DBLoginDetails {
 
             //theStatement = con.prepareStatement(query);
             String query = "INSERT INTO USERS VALUES (" + "'" +username + "'" + ", " + "'" + fname + "'" + ", " + "'" + lname + "'" + ", "
+                    + "'" + theEmail + "'" + ", " + isRegistered + ", " + accountBalance + ");";
+            Statement st = con.createStatement();
+            st.execute(query);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public ResultSet saveTicketToDB(Ticket ticket) {
+        String ticketId = ticket.getTicketID();
+        String fname = user.getFirstName();
+        String lname = user.getlName();
+        String theEmail = user.getEmail();
+        boolean isRegistered = user.isRegistered();
+        int accountBalance = user.getAccountBalance();
+
+        try {
+
+            //theStatement = con.prepareStatement(query);
+            String query = "INSERT INTO TICKET VALUES (" + "'" +username + "'" + ", " + "'" + fname + "'" + ", " + "'" + lname + "'" + ", "
                     + "'" + theEmail + "'" + ", " + isRegistered + ", " + accountBalance + ");";
             Statement st = con.createStatement();
             st.execute(query);
@@ -83,47 +117,49 @@ public class DBController implements DBLoginDetails {
 
     public ResultSet setToNonRegistered(User user) {
         String username = user.getUsername();
-        loadExistingUsers(databaseController.readAllTables("USERS"));
-        for (User theUser : existingUsers) {
+        for (User theUser : existingUsersList.getExistingUsers()) {
             if(theUser.getUsername().contentEquals(username)) {
-                loggedInUser= theUser;
-                System.out.println(theUser.getUsername().toString());
-                return;
+                try {
+                    String query = "UPDATE USERS SET IsRegistered = false WHERE username = " + "'" + username +"'" + ";";
+                    Statement st = con.createStatement();
+                    st.execute(query);
+                } catch(SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(theUser.getUsername().toString() + "has been un-registered");
+                return res;
             }
         }
-        System.out.println("User does not exist.");
-    }
-        try {
-            String query = "UPDATE USERS SET IsRegistered = false WHERE username = " + "'" + username +"'" + ";";
-            Statement st = con.createStatement();
-            st.execute(query);
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
+        System.out.println("User was not found-- wasn't un-register");
         return res;
     }
+//        try {
+//            String query = "UPDATE USERS SET IsRegistered = false WHERE username = " + "'" + username +"'" + ";";
+//            Statement st = con.createStatement();
+//            st.execute(query);
+//        } catch(SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return res;
+//    }
 
-    public void loadExistingUsers(ResultSet res) {
-        try {
-            while(res.next()) {
-                existingUsers.add(new User (
-                        res.getString("Username"),
-                        res.getString("FName"),
-                        res.getString("LName"),
-                        res.getString("Email"),
-                        res.getBoolean("IsRegistered"),
-                        res.getInt("AccountBalance")));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
     /*
            String username = theUser.getUsername();
         String query = "UPDATE USERS " +
                 "SET AccountBalance = '" + amount + "' " +
                 "WHERE Username = '" + username + "';";
      */
+
+    public User searchUser(String username) {
+        existingUsersList = new ExistingUsersList();
+        for (User theUser : existingUsersList.getExistingUsers()) {
+            if (theUser.getUsername().contentEquals(username)) {
+                return theUser;
+            }
+        }
+        return null;
+    }
 
 
 }

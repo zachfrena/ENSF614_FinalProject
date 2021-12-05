@@ -12,7 +12,7 @@ public class TicketController {
 
 //    private TicketView ticketView;
     private User user;
-
+    private DBController databaseController;
 
     public TicketController(User u){ //constructor
         this.user=u;
@@ -20,10 +20,14 @@ public class TicketController {
         */
     }
 
-//    public Ticket selectTicket(){
-//
-//    }
-    public TicketController() {}
+    public Ticket selectTicket(){
+        Ticket ticket = new Ticket(4, "kelten2", 4);
+        this.databaseController.saveTicketToDB(ticket);
+        int ticketID, Showing showing, User user, int seat
+    }
+
+
+
 
     public void getRefund(int ticketID){
 

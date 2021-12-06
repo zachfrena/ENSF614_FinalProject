@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.User;
+import Model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,10 +9,15 @@ public class DBController implements DBLoginDetails {
     private Connection con;
     private ResultSet res;
     protected PreparedStatement theStatement;
-    private ArrayList<User> existingUsers;
+    private ExistingUsersList existingUsersList;
+    private ArrayList<Movies> movies;
+    private ArrayList<Showing> showings;
+
+
 
     public DBController() {
         establishConnection();
+//
     }
 
     public void establishConnection() {
@@ -37,6 +42,17 @@ public class DBController implements DBLoginDetails {
     public ResultSet readAllTables(String theTable) {
         try {
             String query = "SELECT * FROM " + theTable + ";";
+            theStatement = con.prepareStatement(query);
+            res = theStatement.executeQuery();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public ResultSet readMovies(int movieId) {
+        try {
+            String query = "SELECT * FROM MOVIE WHERE MovieID = " + movieId + ";";
             theStatement = con.prepareStatement(query);
             res = theStatement.executeQuery();
         } catch(SQLException e) {
@@ -83,47 +99,100 @@ public class DBController implements DBLoginDetails {
 
     public ResultSet setToNonRegistered(User user) {
         String username = user.getUsername();
-        loadExistingUsers(databaseController.readAllTables("USERS"));
-        for (User theUser : existingUsers) {
+        for (User theUser : existingUsersList.getExistingUsers()) {
             if(theUser.getUsername().contentEquals(username)) {
-                loggedInUser= theUser;
-                System.out.println(theUser.getUsername().toString());
-                return;
+                try {
+                    String query = "UPDATE USERS SET IsRegistered = false WHERE username = " + "'" + username +"'" + ";";
+                    Statement st = con.createStatement();
+                    st.execute(query);
+                } catch(SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(theUser.getUsername().toString() + "has been un-registered");
+                return res;
             }
         }
-        System.out.println("User does not exist.");
-    }
-        try {
-            String query = "UPDATE USERS SET IsRegistered = false WHERE username = " + "'" + username +"'" + ";";
-            Statement st = con.createStatement();
-            st.execute(query);
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
+        System.out.println("User was not found-- wasn't un-register");
         return res;
     }
 
-    public void loadExistingUsers(ResultSet res) {
+    public ArrayList<Showing> readAllShowings() {
+        ArrayList<Showing> showingList = new ArrayList<Showing>();
+        ResultSet res = readAllTables("SHOWING");
+
         try {
             while(res.next()) {
-                existingUsers.add(new User (
-                        res.getString("Username"),
-                        res.getString("FName"),
-                        res.getString("LName"),
-                        res.getString("Email"),
-                        res.getBoolean("IsRegistered"),
-                        res.getInt("AccountBalance")));
+                int showingId = res.getInt("ShowingID");
+                int movieId  = res.getInt("MovieID");
+                Date theDate = res.getDate("TheDate");
+                Time showingTime = res.getTime("ShowingTime");
+                String theatreName = res.getString("Theatre");
+                movies = readAllMovies();
+                Movies theMovie = movies.get(movieId - 1);
+                Showing theShowing = new Showing(showingId, theMovie, theDate, showingTime, theatreName);
+                showingList.add(theShowing);
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+       // System.out.println(showingList);
+        return showingList;
     }
+
+    public ArrayList<Movies> readAllMovies() {
+        ResultSet res = readAllTables("Movie");
+        movies = new ArrayList<Movies>();
+
+        try {
+            while(res.next()) {
+                int movieId = res.getInt("MovieID");
+                String title = res.getString("Title");
+
+                Movies theMovie = new Movies(movieId, title);
+                movies.add(theMovie);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+       // System.out.println(movies);
+        return movies;
+    }
+
+    public ArrayList<Movies> getMovies() {
+        return movies;
+    }
+
+    public ArrayList<Showing> getShowings() {
+        return showings;
+    }
+    //        try {
+//            String query = "UPDATE USERS SET IsRegistered = false WHERE username = " + "'" + username +"'" + ";";
+//            Statement st = con.createStatement();
+//            st.execute(query);
+//        } catch(SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return res;
+//    }
+
+
     /*
            String username = theUser.getUsername();
         String query = "UPDATE USERS " +
                 "SET AccountBalance = '" + amount + "' " +
                 "WHERE Username = '" + username + "';";
      */
+
+    public User searchUser(String username) {
+        existingUsersList = new ExistingUsersList();
+        for (User theUser : existingUsersList.getExistingUsers()) {
+            if (theUser.getUsername().contentEquals(username)) {
+                return theUser;
+            }
+        }
+        return null;
+    }
 
 
 }

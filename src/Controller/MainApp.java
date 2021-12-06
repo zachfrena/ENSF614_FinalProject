@@ -25,7 +25,7 @@ public class MainApp {
 //    }
 
     public MainApp(SignUpController signUpController, MainMenuController mainMenuController, MovieController movieController,
-                   TicketController ticketController, DBController databaseController, LoginController loginController) {
+                   DBController databaseController, LoginController loginController) {
         //    this.frame = frame;
         this.ticketController = ticketController;
         this.databaseController = databaseController;
@@ -40,14 +40,14 @@ public class MainApp {
     public void buildDatabase() {
         DBController databaseController = new DBController();
       //  loginController.loadExistingUsers(databaseController.readAllTables("USERS"));
-        movieController.getShowings(databaseController.readAllTables("SHOWING"));   // getMovies(Movie movie)
+       // movieController.getShowings(databaseController.readAllTables("SHOWING"));   // getMovies(Movie movie)
        // ticketController.getUser(databaseController.readAllTables("USERS")); // ticketController(Ticket ticket)
 
     }
 
     public void run() {
       //  buildMainFrame();
-        buildTicket();
+       // buildTicket();
     }
 
    /* private void buildMainFrame() {
@@ -62,14 +62,14 @@ public class MainApp {
     }
     */
 
-    public void buildTicket() {
-        TicketController ticketController = new TicketController();
-       /* ticketController.setTicketView(frame.getTicketView());
-        frame.setTicket(ticketController.getTicketModel());
-        ticketController.setActionListener();
-
-        */
-    }
+////    public void buildTicket() {
+////        TicketController ticketController = new TicketController();
+//       /* ticketController.setTicketView(frame.getTicketView());
+//        frame.setTicket(ticketController.getTicketModel());
+//        ticketController.setActionListener();
+//
+//        */
+//    }
 
     public void buildLogin() {
 //        LoginController loginController = new LoginController();
@@ -109,14 +109,14 @@ public class MainApp {
 //        MainFrame frame = new MainFrame();
         DBController databaseController = new DBController();
         LoginController loginController = new LoginController(databaseController);
-        TicketController ticketController = new TicketController();
+        //TicketController ticketController = new TicketController();
         SignUpController signUpController = new SignUpController(databaseController);
         MainMenuController mainMenuController = new MainMenuController(loginController.getLoggedInUser());
         MovieController movieController = new MovieController();
 
 
 //        MainApp mainApp = new MainApp(frame, ticketController, databaseController, signUpController, mainMenuController, movieController);
-        MainApp mainApp = new MainApp(signUpController, mainMenuController, movieController, ticketController,
+        MainApp mainApp = new MainApp(signUpController, mainMenuController, movieController,
                 databaseController, loginController);
         mainApp.buildDatabase();
     }

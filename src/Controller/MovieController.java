@@ -20,19 +20,19 @@ public class MovieController {
 //        this.movieView.addActionListener(new MovieListener());
     }
 
-    public void getShowings(ResultSet res) {
-        try {
-            while (res.next()) {
-                populateMovies(new Showing(res.getInt("ShowingID"),
-                        res.getInt("MovieID"),
-                        res.getDate("TheDate"),
-                        res.getTime("ShowingTime"),
-                        res.getString("Theatre")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void getShowings(ResultSet res) {
+//        try {
+//            while (res.next()) {
+//                populateMovies(new Showing(res.getInt("ShowingID"),
+//                        res.getInt("MovieID"),
+//                        res.getDate("TheDate"),
+//                        res.getTime("ShowingTime"),
+//                        res.getString("Theatre")));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void populateMovies(Showing showing) {
             movieList.add(showing);

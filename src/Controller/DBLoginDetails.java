@@ -6,6 +6,6 @@ public interface DBLoginDetails {
 
     //  Database credentials
     static final String theUserName = "root";
-    static final String thePassword = "password";
+    static final String thePassword = "Charlotte1";
 
 }

@@ -144,6 +144,8 @@ public class SignUpView extends JPanel{
 	public void setUserName(String userName) {
 		this.userName.setText(userName);
 	}
+
+	public String getUserName() { return userName.getText().strip();}
 	
 	public String getCreditNum() {
 		return creditNum.getText().strip();

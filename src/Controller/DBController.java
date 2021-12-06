@@ -10,8 +10,8 @@ public class DBController implements DBLoginDetails {
     private ResultSet res;
     protected PreparedStatement theStatement;
     private ExistingUsersList existingUsersList;
-    private ArrayList<Movies> movies;
-    private ArrayList<Showing> showings;
+//    private ArrayList<Movies> movies;
+//    private ArrayList<Showing> showings;
 
 
 
@@ -61,19 +61,47 @@ public class DBController implements DBLoginDetails {
         return res;
     }
 
-    public ResultSet saveToDB(User user) {
+    public ResultSet saveUserToDB(User user) {
         String username = user.getUsername();
         String fname = user.getFirstName();
         String lname = user.getlName();
         String theEmail = user.getEmail();
+        String theCreditCard = user.getCreditNum();
         boolean isRegistered = user.isRegistered();
         int accountBalance = user.getAccountBalance();
 
         try {
 
             //theStatement = con.prepareStatement(query);
-            String query = "INSERT INTO USERS VALUES (" + "'" +username + "'" + ", " + "'" + fname + "'" + ", " + "'" + lname + "'" + ", "
-                    + "'" + theEmail + "'" + ", " + isRegistered + ", " + accountBalance + ");";
+            String query = "INSERT INTO USERS (Username, FName, LName, Email, IsRegistered, CcNum, AccountBalance) VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement pStat = con.prepareStatement(query);
+            pStat.setString(1, username);
+            pStat.setString(2, fname);
+            pStat.setString(3, lname);
+            pStat.setString(4, theEmail);
+            pStat.setBoolean(5, isRegistered);
+            pStat.setString(6, theCreditCard);
+            pStat.setInt(7, accountBalance);
+            int rowCount = pStat.executeUpdate();
+//            String query = "INSERT INTO USERS VALUES (" + "'" +username + "'" + ", " + "'" + fname + "'" + ", " + "'" + lname + "'" + ", "
+//                    + "'" + theEmail + "'" + ", " + "'" + isRegistered + "'" + ", " + accountBalance + ", " + "'" + theCreditCard + "'" + ";";
+//            pStat = con.prepareStatement(query);
+//            pStat.executeQuery();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public ResultSet saveTicketToDB(Ticket ticket) {
+        int ticketId = ticket.getTicketId();
+        int showingId = ticket.getShowing().getShowingID();
+        String username = ticket.getUser().getUsername();
+        int seatNumber = ticket.getSeatNumber();
+
+        try {
+            String query = "INSERT INTO TICKET VALUES (" + "'" +ticketId + "'" + ", " + "'" + showingId + "'" + ", " + "'" + username + "'" + ", "
+                    + "'" + seatNumber + "'" + ");";
             Statement st = con.createStatement();
             st.execute(query);
         } catch(SQLException e) {
@@ -81,21 +109,6 @@ public class DBController implements DBLoginDetails {
         }
         return res;
     }
-
-//    public ResultSet updateSeat(Ticket ticket) {
-//        int ticketId = ticket.getTicketId();
-//        int showingId = ticket.getTicketId();
-//        int seat = ticket.getSeat();
-//
-//        try {
-//            String query = "UPDATE TICKET SET Seat = " + seat + " WHERE TicketID = " + ticketId + ";";
-//            theStatement = con.prepareStatement(query);
-//            res = theStatement.executeQuery();
-//        } catch(SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return res;
-//    }
 
     public ResultSet setToNonRegistered(User user) {
         String username = user.getUsername();
@@ -116,56 +129,56 @@ public class DBController implements DBLoginDetails {
         return res;
     }
 
-    public ArrayList<Showing> readAllShowings() {
-        ArrayList<Showing> showingList = new ArrayList<Showing>();
-        ResultSet res = readAllTables("SHOWING");
+//    public ArrayList<Showing> readAllShowings() {
+//        ArrayList<Showing> showingList = new ArrayList<Showing>();
+//        ResultSet res = readAllTables("SHOWING");
+//
+//        try {
+//            while(res.next()) {
+//                int showingId = res.getInt("ShowingID");
+//                int movieId  = res.getInt("MovieID");
+//                Date theDate = res.getDate("TheDate");
+//                Time showingTime = res.getTime("ShowingTime");
+//                String theatreName = res.getString("Theatre");
+//                movies = readAllMovies();
+//                Movies theMovie = movies.get(movieId - 1);
+//                Showing theShowing = new Showing(showingId, theMovie, theDate, showingTime, theatreName);
+//                showingList.add(theShowing);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//       // System.out.println(showingList);
+//        return showingList;
+//    }
 
-        try {
-            while(res.next()) {
-                int showingId = res.getInt("ShowingID");
-                int movieId  = res.getInt("MovieID");
-                Date theDate = res.getDate("TheDate");
-                Time showingTime = res.getTime("ShowingTime");
-                String theatreName = res.getString("Theatre");
-                movies = readAllMovies();
-                Movies theMovie = movies.get(movieId - 1);
-                Showing theShowing = new Showing(showingId, theMovie, theDate, showingTime, theatreName);
-                showingList.add(theShowing);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-       // System.out.println(showingList);
-        return showingList;
-    }
-
-    public ArrayList<Movies> readAllMovies() {
-        ResultSet res = readAllTables("Movie");
-        movies = new ArrayList<Movies>();
-
-        try {
-            while(res.next()) {
-                int movieId = res.getInt("MovieID");
-                String title = res.getString("Title");
-
-                Movies theMovie = new Movies(movieId, title);
-                movies.add(theMovie);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-       // System.out.println(movies);
-        return movies;
-    }
-
-    public ArrayList<Movies> getMovies() {
-        return movies;
-    }
-
-    public ArrayList<Showing> getShowings() {
-        return showings;
-    }
+//    public ArrayList<Movies> readAllMovies() {
+//        ResultSet res = readAllTables("Movie");
+//        movies = new ArrayList<Movies>();
+//
+//        try {
+//            while(res.next()) {
+//                int movieId = res.getInt("MovieID");
+//                String title = res.getString("Title");
+//
+//                Movies theMovie = new Movies(movieId, title);
+//                movies.add(theMovie);
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//       // System.out.println(movies);
+//        return movies;
+//    }
+//
+//    public ArrayList<Movies> getMovies() {
+//        return movies;
+//    }
+//
+//    public ArrayList<Showing> getShowings() {
+//        return showings;
+//    }
     //        try {
 //            String query = "UPDATE USERS SET IsRegistered = false WHERE username = " + "'" + username +"'" + ";";
 //            Statement st = con.createStatement();

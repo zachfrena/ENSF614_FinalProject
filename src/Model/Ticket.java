@@ -6,15 +6,14 @@ public class Ticket {
 
     private Showing showing; //pass integer (showingID) into DB
     private User user; //pass String (username) into DB
-    //private Seat seat;
-    private ArrayList<Seat> seats;
+    private int seatNumber;
     private int ticketId;
 
-    public Ticket(int ticketId, Showing showing, User user, ArrayList<Seat> seat){
+    public Ticket(int ticketId, Showing showing, User user, int seat){
         this.ticketId = ticketId;
         this.showing=showing;
         this.user=user;
-        this.seats=seat;
+        this.seatNumber = seat;
     }
 
     public void emailTicket(){
@@ -25,17 +24,7 @@ public class Ticket {
         this.ticketId = ticketId;
     }
 
-    public int getTicketId() {
-        return ticketId;
-    }
-
-    public ArrayList<Seat> getSeat() {
-        return seats;
-    }
-
-    public void setSeat(ArrayList<Seat> seat) {
-        this.seats = seat;
-    }
+    public int getTicketId() { return ticketId; }
 
     public Showing getShowing() {
         return showing;
@@ -53,9 +42,13 @@ public class Ticket {
         this.user = user;
     }
 
+    public int getSeatNumber() {
+        return seatNumber;
+    }
+
     @Override
     public String toString() {
-       return "Ticket ID: " + ticketId + "\nMovie: " + showing.getMovie().getTitle() + "\nSeat: " + seats;
+       return "Ticket ID: " + ticketId + "\nMovie: " + showing.getMovie().getTitle() + "\nSeat: " + seatNumber;
     }
 }
 

@@ -1,42 +1,36 @@
 package Controller;
 
+import Model.Showing;
+import view.SeatView;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class SeatController{
 	
-	private ArrayList<String> availableSeats;
-	/*private SeatView seatView;
 
-	 */
+	private SeatView seatView;
+	private Showing showing;
+
+//SeatController takes a showing, populates the GUI, takes user-input from GUI (selected seat), then updates the showing
 	
 	
-	public SeatController(ArrayList<String> availableSeats) {
-		this.availableSeats = availableSeats;
-		/* this.seatView = seatView;
+	public SeatController() {
+		this.seatView = seatView;
 		this.seatView.addActionListener(new SeatListener());
-
-	 */
 	}
 
-	public void chooseSeat() {
-		
+	public void populateGUI(Showing showing) {
+		//populate the GUI
 	}
 	
-	private void checkOut() {
-		
+	public void updateSeats(int seat){
+		this.showing.updateSeats(seat);//create method in Showing class
 	}
 
-	public ArrayList<String> getAvailableSeats() {
-		return availableSeats;
-	}
 
-	public void setAvailableSeats(ArrayList<String> availableSeats) {
-		this.availableSeats = availableSeats;
-	}
-
-/*	public SeatView getSeatView() {
+	public SeatView getSeatView() {
 		return seatView;
 	}
 
@@ -45,13 +39,12 @@ public class SeatController{
 	}
 
 
- */
-
-/*	public class SeatListener implements ActionListener{
+	public class SeatListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
-			chooseSeat();
+			//do something here
 		}
-*/
+		}
+
 	}
 

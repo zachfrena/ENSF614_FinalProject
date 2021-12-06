@@ -3,6 +3,7 @@ package Controller;
 import Model.Showing;
 import Model.Ticket;
 import Model.User;
+import view.MainMenuView;
 import Controller.DBController;
 
 import javax.swing.*;
@@ -16,68 +17,62 @@ public class MainMenuController {
     private User user;
     private Showing showing;
     private Ticket ticket;
-//    private LoginController loginController;
-    //private MainMenuView mainMenuView;
+    private MainMenuView mainMenuView;
 
-    public MainMenuController(User user){
-     //   this.loginController = new LoginController();
+
+
+    public void setActionListener(){
+        mainMenuView.addActionListener(new MainMenuListener());
+    }
+
+    public void setMainMenuView(MainMenuView mainMenuView) {
+        this.mainMenuView = mainMenuView;
+    }
+
+    public void setIsRegistered(boolean isRegistered){
+        mainMenuView.setIsRegistered(isRegistered);
+    }
+
+    public void setUser(User user){
         this.user = user;
+        mainMenuView.setUser(user);
     }
 
-    public boolean checkBalance(User theUser) {
-        int currentBalance = theUser.getAccountBalance();
-        return currentBalance >= 20;
+    public void setGreeting(){
+        mainMenuView.setGreeting();
     }
 
-    public void addBalance(User theUser, int amount) {
-        //JOptionPane.showMessageDialog(null, "$" + amount + " has been  added to your balance.");
-        System.out.println("test " + theUser);
-
-        theUser.setAccountBalance(amount);
+    public boolean checkBalance() {
+        int currentBalance = user.getAccountBalance();
+        return (currentBalance >= 20);
     }
 
-    public void displayAccountBalance() {
-        /*JOptionPane.showMessageDialog(null, "$" +
-                user.getAccountBalance());
-
-         */
-        System.out.println(user.getUsername() + " Account balance: " + user.getAccountBalance());
+    public void addBalance(int amount) {
+        user.updateAccountBalance(amount);
+        displayAccountBalance();
     }
 
-//    public void getUser(ResultSet res) {
-//        try {
-//            while(res.next()) {
-//                setUser(new User(res.getString("Username"),
-//                res.getString("FName"),
-//                res.getString("LName"),
-//                res.getString("Email"),
-//                res.getBoolean("IsRegistered"),
-//                res.getInt("AccountBalance")));
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void setUser(User user){
-//        this.user = user;
-//    }
-
-
-
-
-    public void getTickets(ResultSet res){
-
+    public void displayAccountBalance(){
+        mainMenuView.setBalance(user.getAccountBalance());
     }
 
-    public void getMovies(ResultSet res){
 
-    }
-
-    public void cancelRegistration(User user) {
+    public void cancelRegistration() {
         user.setRegistered(false);
+        mainMenuView.setIsRegistered(user.isRegistered());
         System.out.println("Registration cancelled:" + user.getUsername() + " " + user.isRegistered());
+    }
+
+    class MainMenuListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == mainMenuView.getAddButton()){
+                addBalance(mainMenuView.getAmount());
+            } else if (e.getSource() == mainMenuView.getUnregisterButton()){
+                cancelRegistration();
+            }
+        }
     }
 
 }

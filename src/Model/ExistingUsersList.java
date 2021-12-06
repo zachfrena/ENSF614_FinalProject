@@ -25,6 +25,7 @@ public class ExistingUsersList {
                 res.getString("LName"),
                 res.getString("Email"),
                 res.getBoolean("IsRegistered"),
+                res.getString("CcNum"),
                 res.getInt("AccountBalance")));
             }
         } catch(SQLException e) {

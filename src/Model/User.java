@@ -5,16 +5,22 @@ public class User {
     private String fName;
     private String lName;
     private String email;
+    private String creditNum;
     private boolean isRegistered;
     private int accountBalance;
 
-    public User(String username, String fName, String lName, String email, boolean isRegistered, int accountBalance) {
+    public User(String username, String fName, String lName, String email, boolean isRegistered, String creditNum, int accountBalance) {
         this.username = username;
         this.fName = fName;
         this.lName = lName;
         this.email = email;
         this.isRegistered = isRegistered;
+        this.creditNum = creditNum;
         this.accountBalance = accountBalance;
+    }
+
+    public String getCreditNum() {
+        return creditNum;
     }
 
     public String getUsername() {
@@ -42,6 +48,8 @@ public class User {
     public void setAccountBalance(int accountBalance) {
         this.accountBalance = accountBalance;
     }
+
+    public void updateAccountBalance(int transaction){ this.accountBalance += transaction;}
 
     public void setRegistered(boolean registered) {
         isRegistered = registered;

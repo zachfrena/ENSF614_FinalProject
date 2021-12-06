@@ -1,5 +1,7 @@
 package view;
 
+
+import Model.User;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -13,6 +15,8 @@ public class MainMenuView extends JPanel {
 	private JButton addButton;
 	private JButton unregisterButton;
 	private JTextField balance;
+	private JLabel greeting;
+	private User user;
 	private boolean isRegistered;
 	
 	public MainMenuView() {
@@ -21,7 +25,7 @@ public class MainMenuView extends JPanel {
 		
 		JLabel title = new JLabel("Main Menu");
 		title.setFont(new Font("Arial", Font.BOLD, 24));
-		JLabel greeting = new JLabel("Signed in as: " + "Evan"/*controller.getUser*/);
+		greeting = new JLabel("Signed in as: " + getUserName());
 		greeting.setFont(new Font("Arial", Font.BOLD, 16));
 		
 		JPanel titlePanel = new JPanel();
@@ -51,8 +55,7 @@ public class MainMenuView extends JPanel {
 		amount = new JTextField(8);
 		addButton = new JButton("Add");
 		unregisterButton = new JButton("Unregister");
-		if (!isRegistered)
-			unregisterButton.setEnabled(false);
+
 		
 		JPanel botLeft = new JPanel(new FlowLayout());
 		botLeft.setPreferredSize(new Dimension(160,80));
@@ -78,7 +81,23 @@ public class MainMenuView extends JPanel {
 		add(Box.createRigidArea(new Dimension(150,0)), BorderLayout.WEST);
 		add(Box.createRigidArea(new Dimension(150,0)), BorderLayout.EAST);
 	}
-	
+
+	public String getUserName(){
+		if (user != null){
+			return user.getUsername();
+		} else {
+			return "User";
+		}
+	}
+
+	public void setGreeting(){
+		greeting.setText("Signed in as: " + getUserName());
+	}
+
+	public void setUser(User user){
+		this.user = user;
+	}
+
 	public JButton getMovieButton() {
 		return movieButton;
 	}
@@ -105,12 +124,15 @@ public class MainMenuView extends JPanel {
 		return n;
 	}
 	
-	public void setBalance(String balance) {
-		this.balance.setText(balance);
+	public void setBalance(int balance) {
+		String balanceStr = String.valueOf(balance);
+		this.balance.setText(balanceStr);
 	}
 	
 	public void setIsRegistered(boolean status) {
 		isRegistered = status;
+		if (!isRegistered)
+			unregisterButton.setEnabled(false);
 	}
 	
 	public void addMenuListener(ActionListener listener) {

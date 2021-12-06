@@ -1,51 +1,57 @@
 package Controller;
 
 import Model.User;
+import view.SignUpView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SignUpController{
-	
-//	SignUpView signUpView;
+
 	private DBController databaseController;
+	private User user;
+	private SignUpView signUpView;
+
+
 	public SignUpController(DBController databaseController) {
 		this.databaseController = databaseController;
 	}
-//	public SignUpController(SignUpView signUpView, DBController databaseController) {
-//		this.signUpView = signUpView;
-//		this.databaseController = databaseController;
-//		this.signUpView.addActionListener(new SignUpListener());
-//	}
+
+	public void setSignUpView(SignUpView signUpView){
+		this.signUpView = signUpView;
+	}
+
+	public void setActionListener() {signUpView.addActionListener(new SignUpListener());}
 	
 	public void createUser() {
-//		User user = new User(signUpView.fName.getText(), signUpView.lName.getText(), signUpView.email.getText(),
-//				signUpView.registered.contains(null));
-		User user = new User("z9","zach", "frena", "hello@gmail.com", false, 0);
-		this.databaseController.saveToDB(user);
-//		LoginController loginController = new LoginController();
-//		loginController.loadExistingUsers();
+		String username = signUpView.getUserName();
+		String fName = signUpView.getFName();
+		String lName = signUpView.getLName();
+		String email = signUpView.getEmail();
+		Boolean isRegistered = signUpView.getRegChoice();
+		String creditNum = signUpView.getCreditNum();
+		user = new User(username, fName, lName, email, isRegistered, creditNum, 0);
+		if (isRegistered)
+			payAnnualFee();
+		this.databaseController.saveUserToDB(user);
 	}
 	
 	public void payAnnualFee() {
-		
+		user.updateAccountBalance(-20);
 	}
 
-//	public SignUpView getSignUpView() {
-//		return signUpView;
-//	}
-//
-//	public void setSignUpView(SignUpView signUpView) {
-//		this.signUpView = signUpView;
-//	}
+	public User getUser(){
+		return user;
+	}
 
-
-/*	public class SignUpListener implements ActionListener {
+	public class SignUpListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-
+			if (e.getSource() == signUpView.getConfirmButton()) {
+				createUser();
+			}
 		}
 	}
 
- */
+
 }

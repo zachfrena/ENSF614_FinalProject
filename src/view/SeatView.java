@@ -130,9 +130,13 @@ public class SeatView extends JPanel{
 		return confirmButton;
 	}
 	
-	public void resetSeatSelection() {
+	public void resetSeatSelection() { //Might remove this depending on functionality
 		populateSeats(seats);
 		selectedSeat = -1;
+	}
+	
+	public int getSelectedSeat() {
+		return selectedSeat;
 	}
 	
 	public void addMenuListener(ActionListener listener) {

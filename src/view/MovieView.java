@@ -12,6 +12,9 @@ public class MovieView extends JPanel{
 	private JComboBox movieSelector;
 	private JComboBox theatreSelector;
 	private JComboBox timeSelector;
+	private JButton movieButton;
+	private JButton theatreButton;
+	private JButton timeButton;
 	private JButton backButton;
 	private JButton confirmButton;
 	private ArrayList<String> movieList;
@@ -44,16 +47,41 @@ public class MovieView extends JPanel{
 		//------------------------------------------------------------------
 		
 		movieSelector = new JComboBox(movieList.toArray());
+		movieSelector.setPreferredSize(new Dimension(300,25));
+		movieButton = new JButton("Select");
+		
+		JPanel moviePanel = new JPanel(new FlowLayout());
+		moviePanel.add(movieSelector);
+		moviePanel.add(Box.createRigidArea(new Dimension(10,0)));
+		moviePanel.add(movieButton);
+		
 		theatreSelector = new JComboBox(theatreList.toArray());
+		theatreSelector.setPreferredSize(new Dimension(300,25));
+		theatreButton = new JButton("Select");
+		
+		JPanel theatrePanel = new JPanel(new FlowLayout());
+		theatrePanel.add(theatreSelector);
+		theatrePanel.add(Box.createRigidArea(new Dimension(10,0)));
+		theatrePanel.add(theatreButton);
+		
+		
 		timeSelector = new JComboBox(timeList.toArray());
+		timeSelector.setPreferredSize(new Dimension(300,25));
+		timeButton = new JButton("Select");
+		
+		JPanel timePanel = new JPanel(new FlowLayout());
+		timePanel.add(timeSelector);
+		timePanel.add(Box.createRigidArea(new Dimension(10,0)));
+		timePanel.add(timeButton);
+		
 		
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-		centerPanel.add(movieSelector);
+		centerPanel.add(moviePanel);
 		centerPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-		centerPanel.add(theatreSelector);
+		centerPanel.add(theatrePanel);
 		centerPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-		centerPanel.add(timeSelector);
+		centerPanel.add(timePanel);
 		centerPanel.add(Box.createRigidArea(new Dimension(0, 100)));
 		
 		backButton = new JButton("Back");
@@ -103,6 +131,9 @@ public class MovieView extends JPanel{
 	
 	public void addActionListener(ActionListener listener) {
 		confirmButton.addActionListener(listener);
+		movieButton.addActionListener(listener);
+		theatreButton.addActionListener(listener);
+		timeButton.addActionListener(listener);
 	}
 	
 	public String getSelectedMovie() {

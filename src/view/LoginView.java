@@ -62,6 +62,10 @@ public class LoginView extends JPanel {
 		return loginButton;
 	}
 	
+	public JTextField getInput() {
+		return input;
+	}
+	
 	public String getUserName() {
 		return input.getText().strip();
 	}
@@ -76,9 +80,11 @@ public class LoginView extends JPanel {
 	
 	public void addMenuListener(ActionListener listener) {
 		loginButton.addActionListener(listener);
+		input.addActionListener(listener);
 	}
 	
 	public void addActionListener(ActionListener listener) {
 		loginButton.addActionListener(listener);
+		input.addActionListener(listener);
 	}
 }

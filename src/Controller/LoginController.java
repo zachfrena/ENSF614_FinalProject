@@ -48,7 +48,7 @@ public class LoginController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == loginView.getLoginButton()){
+            if(e.getSource() == loginView.getLoginButton() || e.getSource() == loginView.getInput()){
                 login(loginView.getUserName());
             }
         }

@@ -96,7 +96,7 @@ public class MainApp {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == frame.getLoginView().getLoginButton()) {
+            if(e.getSource() == frame.getLoginView().getLoginButton() || e.getSource() == frame.getLoginView().getInput()) {
                 if (frame.getLoginView().getStatus()) {
                     mainMenuController.setUser(loginController.getLoggedInUser());
                     mainMenuController.setIsRegistered(loginController.getLoggedInUser().isRegistered());

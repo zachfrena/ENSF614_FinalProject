@@ -205,7 +205,9 @@ public class MovieController {
         ArrayList<String> theatres = new ArrayList<String>();
         for (int i = 0; i < availableShowings.size(); i++){
             if (availableShowings.get(i).getMovie().getTitle().equals(movie)){
-                theatres.add(availableShowings.get(i).getTheatre());
+            	String theatre = availableShowings.get(i).getTheatre();
+            	if (theatres.indexOf(theatre) == -1)
+            		theatres.add(theatre);
             }
         }
         Collections.sort(theatres);

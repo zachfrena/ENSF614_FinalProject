@@ -13,7 +13,8 @@ INSERT INTO MOVIE(MovieID, Title)
 VALUES
 (1, "Monty Python and the Holy Grail"),
 (2, "Dune"),
-(3, "Ghostbusters: Afterlife");
+(3, "Ghostbusters: Afterlife"),
+(4, "The Princess Bride");
 
 DROP TABLE IF EXISTS USERS;
 CREATE TABLE USERS(
@@ -29,13 +30,16 @@ CREATE TABLE USERS(
 
 INSERT INTO USERS(Username, FName, LName, Email, IsRegistered, AccountBalance, CcNum)
 VALUES
-("dunefan", "Evan", "Cooksley", "ecooksley@aol.com", True, 0, 131331444687923),
-("kelten2", "Kelten", "Falez", "kfalez@aol.com", True, 0, 131231444687923),
-("ghostbuster", "Zach", "Frena", "zfrena@aol.com", True,0 , 131231444687923);
+("dunefan", "Evan", "Cooksley", "ecooksley@aol.com", True, 35, 123456789),
+("kelten2", "Kelten", "Falez", "kfalez@aol.com", False, 40, 987654321),
+("MP4Lyfe", "David", "Cooksley", "d.cook@yahoo.com", True, 120, 456789123),
+("user2", "Greg", "Gregory", "greg@greg.greg", False, 66, 741456963),
+("vvKool", "KKona", "Kappa", "pog@champ.lul", False, 420, 777777777),
+("ghostbuster", "Zach", "Frena", "zfrena@aol.com", True, 0, 963852741);
 
 DROP TABLE IF EXISTS SHOWING;
 CREATE TABLE SHOWING (
-	ShowingID		integer not null,
+	ShowingID		integer not null auto_increment,
     MovieID			integer,
     TheDate			date,
     ShowingTime		time,
@@ -44,14 +48,21 @@ CREATE TABLE SHOWING (
     foreign key (MovieID) references MOVIE(MovieID)
     );
 
-INSERT INTO SHOWING(ShowingID, MovieID, TheDate, ShowingTime, Theatre)
+INSERT INTO SHOWING(MovieID, TheDate, ShowingTime, Theatre)
 VALUES
-(1, 1, "2021-12-31", "16:00:00", "Theatre 1"),
-(2, 2, "2021-12-18", "11:00:00", "Theatre 2"),
-(3, 3, "2021-12-23", "18:00:00", "Theatre 2"),
-(4, 1, "2021-12-24", "14:00:00", "Theatre 3"),
-(5, 2, "2021-12-19", "15:00:00", "Theatre 3"),
-(6, 3, "2021-12-17", "05:00:00", "Theatre 1");
+(1, "2021-12-22", "14:00:00", "Theatre 1"), -- Monty Python > 2
+(1, "2021-12-23", "18:00:00", "Theatre 1"), -- Monty Python > 2
+(1, "2022-01-06", "12:00:00", "Theatre 2"), -- Monty Pyton > 3
+(2, "2021-12-10", "10:00:00", "Theatre 3"), -- Dune < 72
+(2, "2021-12-15", "20:00:00", "Theatre 3"), -- Dune < 2
+(2, "2021-12-24", "10:00:00", "Theatre 4"), -- Dune > 3
+(2, "2021-12-17", "15:00:00", "Theatre 4"), -- Dune < 2
+(3, "2021-12-9", "9:00:00", "Theatre 5"), -- Ghostbusters < 72
+(3, "2021-12-9", "12:00:00", "Theatre 5"), -- Ghostbusters < 72
+(3, "2021-12-9", "15:00:00", "Theatre 5"), -- Ghostbusters < 72
+(3, "2021-12-9", "18:00:00", "Theatre 5"), -- Ghostbusters < 72
+(4, "2021-12-25", "19:00:00", "Theatre 6"); -- Princess Bride > 2
+
     
 DROP TABLE IF EXISTS TICKET;
 CREATE TABLE TICKET (
@@ -66,8 +77,12 @@ CREATE TABLE TICKET (
 
 INSERT INTO TICKET(ShowingID, Username, Seat)
 VALUES
-(1, "dunefan", 1), -- MP >3 weeks theatre 1     not gunna show!
-(3, "kelten2", 2), -- GB 2-3 theatre 2
-(3, "kelten2", 3), -- GB 2-3 theatre 2
-(4, "ghostbuster", 3); -- MP 2-3 weeks theatre 3
+(1, "MP4Lyfe", 7), -- Monty Python Theatre 1 14:00
+(2, "MP4Lyfe", 7), -- Monty Python Theatre 1 18:00
+(1, "ghostbuster", 10), -- Monty Python Theatre 1 14:00
+(4, "vvKool", 16), -- Dune Theatre 3 10:00
+(4, "dunefan", 8), -- Dune Theatre 3 10:00
+(4, "kelten2", 5), -- Dune Theatre 3 10:00
+(9, "user2", 12); -- Ghostbusters Theatre 5 12:00
+
     

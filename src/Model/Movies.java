@@ -45,5 +45,21 @@ public class Movies {
         return "Movie: " + getTitle();
     }
 
+    @Override
+    public boolean equals(Object o){
+        if (o == this){
+            System.out.println("statement 1 o == this");
+            return true;
+        }
+
+        if(!(o instanceof Movies)){
+            System.out.println("statement 2 o not instance of this");
+            return false;
+        }
+
+        Movies m = (Movies) o;
+        return getTitle().equals(m.getTitle());
+    }
+
 
 }

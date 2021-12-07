@@ -8,20 +8,20 @@ public class Test {
 
     public static void main(String[] args){
 
-        System.out.println("test for final project");
-
-        //***-----------creating controllers----------------***
-        DBController databaseController = new DBController();
-        SignUpController signUpController = new SignUpController(databaseController);
-        LoginController loginController = new LoginController();
+//        System.out.println("test for final project");
+//
+//        //***-----------creating controllers----------------***
+//        DBController databaseController = new DBController();
+//        SignUpController signUpController = new SignUpController(databaseController);
+//        LoginController loginController = new LoginController();
 
 
         //***-----------testing log-in with existing user----------------***
-       loginController.login("dunefan");
-//        MainMenuController mainMenuController = new MainMenuController();
-        MovieController movieController = new MovieController();
-        TicketController ticketController = new TicketController(loginController.getLoggedInUser());
-        ticketController.selectTicket();
+//       loginController.login("dunefan");
+////        MainMenuController mainMenuController = new MainMenuController();
+//        MovieController movieController = new MovieController();
+//        TicketController ticketController = new TicketController(loginController.getLoggedInUser());
+//        ticketController.selectTicket();
 //        MainApp app = new MainApp(signUpController,mainMenuController,movieController,databaseController,loginController);
 //
 //        //loginController.login("dunefan");

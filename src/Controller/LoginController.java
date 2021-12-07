@@ -18,10 +18,6 @@ public class LoginController {
     private ExistingUsersList existingUsersList;
     private LoginView loginView;
 
-//    public LoginController(DBController databaseController) {
-//        this.databaseController = databaseController;
-//        existingUsersList = new ExistingUsersList();
-//    }
     public LoginController(){
         existingUsersList = new ExistingUsersList();
     }
@@ -42,30 +38,11 @@ public class LoginController {
         System.out.println("User does not exist.");
     }
 
-//    public void loadExistingUsers(ResultSet res) {
-//        try {
-//            while(res.next()) {
-//                existingUsersList.add(new User (
-//                        res.getString("Username"),
-//                        res.getString("FName"),
-//                        res.getString("LName"),
-//                        res.getString("Email"),
-//                        res.getBoolean("IsRegistered"),
-//                        res.getInt("AccountBalance")));
-//            }
-//        } catch(SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public void setActionListener() {
         loginView.addActionListener(new LoginListener());
     }
     public User getLoggedInUser() { return loggedInUser; }
-
-//    private boolean isLoggedIn() {
-//        return loggedInUser != null;
-//    }
 
    class LoginListener implements ActionListener {
 

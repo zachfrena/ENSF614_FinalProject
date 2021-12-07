@@ -18,8 +18,11 @@ public class MainMenuController {
     private Showing showing;
     private Ticket ticket;
     private MainMenuView mainMenuView;
+    private DBController dataBaseController;
 
-
+    public MainMenuController(DBController d){
+        this.dataBaseController = d;
+    }
 
     public void setActionListener(){
         mainMenuView.addActionListener(new MainMenuListener());
@@ -38,6 +41,10 @@ public class MainMenuController {
         mainMenuView.setUser(user);
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
     public void setGreeting(){
         mainMenuView.setGreeting();
     }
@@ -49,6 +56,7 @@ public class MainMenuController {
 
     public void addBalance(int amount) {
         user.updateAccountBalance(amount);
+        updateDataBaseBalance();
         displayAccountBalance();
     }
 
@@ -56,10 +64,14 @@ public class MainMenuController {
         mainMenuView.setBalance(user.getAccountBalance());
     }
 
+    public void updateDataBaseBalance(){
+        dataBaseController.updateDataBaseBalance(this.user);
+    }
 
     public void cancelRegistration() {
         user.setRegistered(false);
         mainMenuView.setIsRegistered(user.isRegistered());
+        dataBaseController.setToNonRegistered(user);
         System.out.println("Registration cancelled:" + user.getUsername() + " " + user.isRegistered());
     }
 
@@ -68,7 +80,10 @@ public class MainMenuController {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == mainMenuView.getAddButton()){
+
                 addBalance(mainMenuView.getAmount());
+                mainMenuView.chargeCreditCard(mainMenuView.getAmount());
+                mainMenuView.setAmount("");
             } else if (e.getSource() == mainMenuView.getUnregisterButton()){
                 cancelRegistration();
             }

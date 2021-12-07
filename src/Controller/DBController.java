@@ -10,14 +10,10 @@ public class DBController implements DBLoginDetails {
     private ResultSet res;
     protected PreparedStatement theStatement;
     private ExistingUsersList existingUsersList;
-//    private ArrayList<Movies> movies;
-//    private ArrayList<Showing> showings;
-
 
 
     public DBController() {
         establishConnection();
-//
     }
 
     public void establishConnection() {
@@ -61,6 +57,32 @@ public class DBController implements DBLoginDetails {
         return res;
     }
 
+    public ResultSet readAllTickets(){
+        try {
+            String query = "SELECT ShowingID, Username, Seat FROM TICKET";
+            Statement stmt = con.createStatement();
+            res = stmt.executeQuery(query);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public ResultSet readTickets(User user) {
+        String username = user.getUsername();
+        try {
+            String query = "SELECT * FROM TICKET WHERE Username = ?";
+            PreparedStatement pStat = con.prepareStatement(query);
+            pStat.setString(1, username);
+            res = pStat.executeQuery();
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+
+    }
+
     public ResultSet saveUserToDB(User user) {
         String username = user.getUsername();
         String fname = user.getFirstName();
@@ -72,7 +94,6 @@ public class DBController implements DBLoginDetails {
 
         try {
 
-            //theStatement = con.prepareStatement(query);
             String query = "INSERT INTO USERS (Username, FName, LName, Email, IsRegistered, CcNum, AccountBalance) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement pStat = con.prepareStatement(query);
             pStat.setString(1, username);
@@ -83,128 +104,68 @@ public class DBController implements DBLoginDetails {
             pStat.setString(6, theCreditCard);
             pStat.setInt(7, accountBalance);
             int rowCount = pStat.executeUpdate();
-//            String query = "INSERT INTO USERS VALUES (" + "'" +username + "'" + ", " + "'" + fname + "'" + ", " + "'" + lname + "'" + ", "
-//                    + "'" + theEmail + "'" + ", " + "'" + isRegistered + "'" + ", " + accountBalance + ", " + "'" + theCreditCard + "'" + ";";
-//            pStat = con.prepareStatement(query);
-//            pStat.executeQuery();
         } catch(SQLException e) {
             e.printStackTrace();
         }
         return res;
     }
 
-    public ResultSet saveTicketToDB(Ticket ticket) {
-        int ticketId = ticket.getTicketId();
+    public void saveTicketToDB(Ticket ticket) {
         int showingId = ticket.getShowing().getShowingID();
         String username = ticket.getUser().getUsername();
         int seatNumber = ticket.getSeatNumber();
 
         try {
-            String query = "INSERT INTO TICKET VALUES (" + "'" +ticketId + "'" + ", " + "'" + showingId + "'" + ", " + "'" + username + "'" + ", "
-                    + "'" + seatNumber + "'" + ");";
-            Statement st = con.createStatement();
-            st.execute(query);
+            String query = "INSERT INTO TICKET (ShowingID, Username, Seat) VALUES (?,?,?)";
+            PreparedStatement pStat = con.prepareStatement(query);
+            pStat.setInt(1, showingId);
+            pStat.setString(2, username);
+            pStat.setInt(3, seatNumber);
+            pStat.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
         }
-        return res;
+
     }
 
-    public ResultSet setToNonRegistered(User user) {
-        String username = user.getUsername();
-        for (User theUser : existingUsersList.getExistingUsers()) {
-            if(theUser.getUsername().contentEquals(username)) {
-                try {
-                    String query = "UPDATE USERS SET IsRegistered = false WHERE username = " + "'" + username +"'" + ";";
-                    Statement st = con.createStatement();
-                    st.execute(query);
-                } catch(SQLException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(theUser.getUsername().toString() + "has been un-registered");
-                return res;
-            }
+    public void refundTicket(Ticket ticket){
+        int showingId = ticket.getShowing().getShowingID();
+        int seatNumber = ticket.getSeatNumber();
+
+        try{
+            String query = "DELETE FROM TICKET WHERE ShowingID = ? AND Seat = ?";
+            PreparedStatement pStat = con.prepareStatement(query);
+            pStat.setInt(1, showingId);
+            pStat.setInt(2, seatNumber);
+            pStat.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
         }
-        System.out.println("User was not found-- wasn't un-register");
-        return res;
     }
 
-//    public ArrayList<Showing> readAllShowings() {
-//        ArrayList<Showing> showingList = new ArrayList<Showing>();
-//        ResultSet res = readAllTables("SHOWING");
-//
-//        try {
-//            while(res.next()) {
-//                int showingId = res.getInt("ShowingID");
-//                int movieId  = res.getInt("MovieID");
-//                Date theDate = res.getDate("TheDate");
-//                Time showingTime = res.getTime("ShowingTime");
-//                String theatreName = res.getString("Theatre");
-//                movies = readAllMovies();
-//                Movies theMovie = movies.get(movieId - 1);
-//                Showing theShowing = new Showing(showingId, theMovie, theDate, showingTime, theatreName);
-//                showingList.add(theShowing);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//       // System.out.println(showingList);
-//        return showingList;
-//    }
-
-//    public ArrayList<Movies> readAllMovies() {
-//        ResultSet res = readAllTables("Movie");
-//        movies = new ArrayList<Movies>();
-//
-//        try {
-//            while(res.next()) {
-//                int movieId = res.getInt("MovieID");
-//                String title = res.getString("Title");
-//
-//                Movies theMovie = new Movies(movieId, title);
-//                movies.add(theMovie);
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//       // System.out.println(movies);
-//        return movies;
-//    }
-//
-//    public ArrayList<Movies> getMovies() {
-//        return movies;
-//    }
-//
-//    public ArrayList<Showing> getShowings() {
-//        return showings;
-//    }
-    //        try {
-//            String query = "UPDATE USERS SET IsRegistered = false WHERE username = " + "'" + username +"'" + ";";
-//            Statement st = con.createStatement();
-//            st.execute(query);
-//        } catch(SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return res;
-//    }
-
-
-    /*
-           String username = theUser.getUsername();
-        String query = "UPDATE USERS " +
-                "SET AccountBalance = '" + amount + "' " +
-                "WHERE Username = '" + username + "';";
-     */
-
-    public User searchUser(String username) {
-        existingUsersList = new ExistingUsersList();
-        for (User theUser : existingUsersList.getExistingUsers()) {
-            if (theUser.getUsername().contentEquals(username)) {
-                return theUser;
-            }
+    public void setToNonRegistered(User user) {
+        try {
+            String query = "UPDATE USERS SET IsRegistered=False WHERE Username = ?" ;
+            PreparedStatement pStat = con.prepareStatement(query);
+            pStat.setString(1,user.getUsername());
+            pStat.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+    }
+
+
+    public void updateDataBaseBalance(User user) {
+        int accountBalance = user.getAccountBalance();
+        try {
+            String query = "UPDATE USERS SET AccountBalance=? WHERE Username = ?" ;
+            PreparedStatement pStat = con.prepareStatement(query);
+            pStat.setInt(1, accountBalance);
+            pStat.setString(2,user.getUsername());
+            pStat.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

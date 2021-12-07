@@ -4,20 +4,20 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import Model.Ticket;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class TicketView extends JPanel{
-	private JComboBox tickets;
+	private JComboBox ticketSelector;
 	private JButton refundButton;
 	private JButton backButton;
 	private JTextField balance;
-	private ArrayList<String> ticketList;
+	private JPanel centerPanel;
 	
 	public TicketView() {
 		setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(new Insets(5,5,5,5)));
-		ticketList = new ArrayList<String>();
 		
 		JLabel title = new JLabel("Tickets");
 		title.setFont(new Font("Arial", Font.BOLD, 24));
@@ -26,21 +26,19 @@ public class TicketView extends JPanel{
 		topPanel.add(title);
 		title.setAlignmentX(CENTER_ALIGNMENT);
 		
-		//Populate this with a function getTickets()
-		String [] strings = {"James Bond | Theatre 1 | 6:30", "Matrix | Theatre 4 | 9:00"};
-		setTicketList(strings);
-		tickets = new JComboBox(ticketList.toArray());
-		tickets.setPreferredSize(new Dimension(300,30));
+
+		ticketSelector = new JComboBox();
+		ticketSelector.setPreferredSize(new Dimension(400,30));
 		
 		refundButton = new JButton("Refund");
 		refundButton.setPreferredSize(new Dimension(80,30));
 		
 		JPanel innerPanel = new JPanel(new FlowLayout());
-		innerPanel.add(tickets);
+		innerPanel.add(ticketSelector);
 		innerPanel.add(Box.createRigidArea(new Dimension(25,0)));
 		innerPanel.add(refundButton);
 		
-		JPanel centerPanel = new JPanel();
+		centerPanel = new JPanel();
 		centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 		centerPanel.add(Box.createRigidArea(new Dimension(0,180)));
 		centerPanel.add(innerPanel);
@@ -63,12 +61,22 @@ public class TicketView extends JPanel{
 		add(centerPanel, BorderLayout.CENTER);
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
-	
-	public void setTicketList(String [] strings) {
-		for (int i = 0; i < strings.length; i++ ) {
-			ticketList.add(strings[i]);
+
+	public void addTickets(ArrayList<Ticket> tickets){
+		ticketSelector.removeAllItems();
+		for (int i =0; i < tickets.size(); i++){
+			ticketSelector.addItem(tickets.get(i));
 		}
 	}
+
+	public void cantRefund(){
+		JOptionPane.showMessageDialog(centerPanel, "Can't refund within 72 hours of showing.");
+	}
+
+	public Ticket getSelectedTicket(){
+		return (Ticket) ticketSelector.getSelectedItem();
+	}
+
 	
 	public JButton getRefundButton() {
 		return refundButton;
@@ -85,12 +93,13 @@ public class TicketView extends JPanel{
 	public void addActionListener(ActionListener listener) {
 		refundButton.addActionListener(listener);
 	}
-	
-	public void setBalance(String balance) {
-		this.balance.setText(balance);
+
+	public void setBalance(int balance) {
+		String balanceStr = String.valueOf(balance);
+		this.balance.setText(balanceStr);
 	}
 	
 	public String getTicket() {
-		return (String)tickets.getSelectedItem();
+		return (String) ticketSelector.getSelectedItem();
 	}
 }

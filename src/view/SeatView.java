@@ -4,12 +4,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import Model.Seat;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class SeatView extends JPanel{
 	private ArrayList<JButton> seatButtons;
-	private ArrayList<Seat> seats; //FOR TESTING PURPOSES ONLY
 	private int selectedSeat;
 	private JPanel seatPanel;
 	private SeatButtonListener seatButtonListener;
@@ -19,7 +20,6 @@ public class SeatView extends JPanel{
 	public SeatView() {
 		setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(new Insets(5,5,5,5)));
-		seats = new ArrayList<Seat>();
 		seatButtonListener = new SeatButtonListener();
 		
 		
@@ -53,15 +53,17 @@ public class SeatView extends JPanel{
 		JPanel legendPanel = new JPanel(new FlowLayout());
 		legendPanel.add(aLabel);
 		legendPanel.add(available);
+		legendPanel.add(Box.createRigidArea(new Dimension(20,0)));
 		legendPanel.add(sLabel);
 		legendPanel.add(selected);
+		legendPanel.add(Box.createRigidArea(new Dimension(20,0)));
 		legendPanel.add(rLabel);
 		legendPanel.add(reserved);
 		
 		JLabel screen = new JLabel("Screen", JLabel.CENTER);
 		screen.setOpaque(true);
 		screen.setBackground(Color.DARK_GRAY);
-		screen.setPreferredSize(new Dimension(300, 15));
+		screen.setPreferredSize(new Dimension(600, 15));
 		screen.setForeground(Color.white);
 		
 		JPanel screenPanel = new JPanel();
@@ -74,14 +76,7 @@ public class SeatView extends JPanel{
 		topPanel.add(screenPanel, BorderLayout.SOUTH);
 		
 		seatPanel = new JPanel(new GridLayout(0, 10, 0,10));
-		
-		//-------------------------------FOR TESTING PURPOSES---------------------
-		for (int i = 1; i <= 30; i++) {
-			seats.add(new Seat(i));
-		}
-		seats.get(7).reserve();
-		populateSeats(seats);
-		//-------------------------------------------------------------------------
+
 		
 		JPanel centerPanel = new JPanel(new BorderLayout());
 		centerPanel.add(seatPanel, BorderLayout.CENTER);
@@ -100,6 +95,10 @@ public class SeatView extends JPanel{
 		add(centerPanel, BorderLayout.CENTER);
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
+
+	public void disableConfirm(){
+		confirmButton.setEnabled(false);
+	}
 	
 	public void populateSeats(ArrayList<Seat> seats) { //Should be called by button on movie screen
 		selectedSeat = -1;
@@ -107,20 +106,19 @@ public class SeatView extends JPanel{
 		seatPanel.removeAll();
 		for (Seat seat : seats) {
 			JButton seatButton = new JButton("" + seat.getSeatNumber());
+			seatButton.setFont(new Font("Arial", Font.BOLD, 16));
 			if(seat.isTaken()) {
 				seatButton.setEnabled(false);
 				seatButton.setBackground(Color.red);
-				seatButton.setBorderPainted(false);
+				seatButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
 			}
 			seatButton.addActionListener(seatButtonListener);
 			seatButtons.add(seatButton);
 			seatPanel.add(seatButton);
 		}
 	}
-	
-	public void setSeats(ArrayList<Seat> seats) {
-		this.seats = seats;
-	}
+
 	
 	public JButton getCancelButton() {
 		return cancelButton;
@@ -130,13 +128,12 @@ public class SeatView extends JPanel{
 		return confirmButton;
 	}
 	
-	public void resetSeatSelection() { //Might remove this depending on functionality
-		populateSeats(seats);
-		selectedSeat = -1;
-	}
-	
 	public int getSelectedSeat() {
 		return selectedSeat;
+	}
+
+	public void resetSelectedSeat(){
+		selectedSeat = -1;
 	}
 	
 	public void addMenuListener(ActionListener listener) {
@@ -146,6 +143,7 @@ public class SeatView extends JPanel{
 	
 	public void addActionListener(ActionListener listener) {
 		confirmButton.addActionListener(listener);
+		cancelButton.addActionListener(listener);
 	}
 	
 	class SeatButtonListener implements ActionListener {

@@ -15,6 +15,7 @@ public class Showing {
     private String theatre;
     private Movies movie;
     private ArrayList<Seat> allSeats;
+    private int registeredSeats;
 
     public Showing(int showingID, Movies movie, Date showingDate, LocalTime showingTime, String theatre) {
         this.showingID = showingID;
@@ -24,12 +25,25 @@ public class Showing {
         this.movie = movie;
         allSeats = new ArrayList<Seat>();
         makeSeats();
+        registeredSeats = 0;
     }
 
     public void makeSeats() {
-        for(int i = 1; i < 20; i++) {
+        for(int i = 0; i < 20; i++) {
             allSeats.add(new Seat(i));
         }
+    }
+
+    public int getRegisteredSeats(){
+        return registeredSeats;
+    }
+
+    public void incrementRegisteredSeats(){
+        registeredSeats += 1;
+    }
+
+    public Date getDate(){
+        return showingDate;
     }
 
     public Movies getMovie() {
@@ -37,8 +51,12 @@ public class Showing {
     }
 
     public void updateSeats(int seatNumber) { //takes in a seat number
-        allSeats.get(seatNumber-1).setTaken(); //indexes at 0, and sets the seat in array to "isTaken = true"
-}
+        allSeats.get(seatNumber).setTaken(); //indexes at 0, and sets the seat in array to "isTaken = true"
+    }
+
+    public ArrayList<Seat> getAllSeats(){
+        return allSeats;
+    }
 
     public int getShowingID() {
         return showingID;
@@ -48,8 +66,17 @@ public class Showing {
         return movie.getMovieId();
     }
 
+    public LocalTime getTime() {
+        return showingTime;
+    }
+
+    public String getTheatre(){
+        return theatre;
+    }
+
     @Override
     public String toString() {
         return "\nShowing: " + movie.getTitle() + "\nDate: " + showingDate + "\nTime: " + showingTime;
     }
+
 }

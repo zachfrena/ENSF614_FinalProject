@@ -4,6 +4,7 @@ import Model.Movies;
 import Model.Showing;
 import Model.Ticket;
 import Model.User;
+import view.TicketView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,117 +13,138 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.time.LocalTime;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class TicketController {
 
-//    private TicketView ticketView;
+    private TicketView ticketView;
     private User user;
     private DBController databaseController;
-    private ArrayList<Movies> movies;
+    private MovieController movieController;
+    private ArrayList<Ticket> tickets;
     private ArrayList<Showing> showings;
-    private SeatController seatController;
+    private long todayMillis;
 
-
-
-    public TicketController(User u){ //constructor
-        databaseController = new DBController();
-        this.user=u;
-       /* this.ticketView.addActionListener(new TicketListener());
-        */
-    }
-    public void selectTicket(){ //we need to pass parameters in here from GUI
-        Ticket exampleTicket = new Ticket(4, new Showing(5,new Movies(1,"indiana jones"),Calendar.getInstance().getTime(), LocalTime.now(),"theatre1"),user, 4); //hard-coded ticket purchase
-        this.databaseController.saveTicketToDB(exampleTicket);
-
-//        int ticketID, Showing showing, User user, int seat;
-
-        //need to email user the ticket
-
+    public TicketController(DBController databaseController){ //constructor
+        this.databaseController = databaseController;
     }
 
-    public ArrayList<Showing> readAllShowings() {
-        ArrayList<Showing> showingList = new ArrayList<Showing>();
-        ResultSet res = databaseController.readAllTables("SHOWING");
+    public void initializeTickets(){
+        setShowings();
+        loadTickets();
+    }
 
+    public void setMovieController(MovieController movieController){
+        this.movieController = movieController;
+    }
+
+    public void setShowings(){
+        this.showings = movieController.getShowings();
+    }
+
+
+    public void loadTickets(){
+        ResultSet rs = databaseController.readTickets(user);
+        tickets = new ArrayList<Ticket>();
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DATE);
+        cal.clear();
+        cal.set(year, month, day);
+        todayMillis = cal.getTimeInMillis();
         try {
-            while(res.next()) {
-                int showingId = res.getInt("ShowingID");
-                int movieId  = res.getInt("MovieID");
-                Date theDate = res.getDate("TheDate");
-                res.getTime("");
-                LocalTime showingTime = convertLocalTime(res.getTime("ShowingTime"));
-                String theatreName = res.getString("Theatre");
-                movies = readAllMovies();
-                Movies theMovie = movies.get(movieId - 1);
-                Showing theShowing = new Showing(showingId, theMovie, theDate, showingTime, theatreName);
-                showingList.add(theShowing);
+            while (rs.next()) {
+                int showingId = rs.getInt("ShowingID");
+                int seat = rs.getInt("Seat");
+                Showing showing = null;
+                for (int i = 0; i < showings.size(); i++){
+                    if (showings.get(i).getShowingID() == showingId) {
+                        showing = showings.get(i);
+                        break;
+                    }
+                }
+                Ticket ticket = new Ticket(showing, user, seat);
+                tickets.add(ticket);
+
             }
-        } catch (SQLException e) {
-                e.printStackTrace();
-        }
-            // System.out.println(showingList);
-        return showingList;
-}
-
-    public ArrayList<Movies> readAllMovies() {
-        ResultSet res = databaseController.readAllTables("Movie");
-        movies = new ArrayList<Movies>();
-
-        try {
-            while(res.next()) {
-                int movieId = res.getInt("MovieID");
-                String title = res.getString("Title");
-
-                Movies theMovie = new Movies(movieId, title);
-                movies.add(theMovie);
-            }
-
-        } catch (SQLException e) {
+            Collections.sort(tickets, new Comparator<Ticket>() {
+                @Override
+                public int compare(Ticket o1, Ticket o2) {
+                    if (o1.toString().compareTo(o2.toString()) > 0)
+                        return 1;
+                    else if (o1.toString().compareTo(o2.toString()) < 0)
+                        return -1;
+                    else
+                        return 0;
+                }
+            });
+            ticketView.addTickets(tickets);
+        } catch (SQLException e){
             e.printStackTrace();
         }
-        return movies;
     }
 
-    public ArrayList<Movies> getMovies() {
-        return movies;
-    }
+    public void refundTicket(Ticket ticket){
 
-    public ArrayList<Showing> getShowings() {
-        return showings;
-    }
+        databaseController.refundTicket(ticket);
 
-    public LocalTime convertLocalTime(Time time) {
-        if(time != null) {
-            return time.toLocalTime();
+        if (user.isRegistered()){
+            user.updateAccountBalance(20);
+            databaseController.updateDataBaseBalance(user);
+        } else {
+            user.updateAccountBalance(17);
+            databaseController.updateDataBaseBalance(user);
         }
-        return null;
+        ticketView.setBalance(user.getAccountBalance());
+        tickets.remove(ticket);
+        ticketView.addTickets(tickets);
+        int index = showings.indexOf(ticket.getShowing());
+        showings.get(index).getAllSeats().get(ticket.getSeatNumber()).setSeatNotTaken();
+        movieController.setShowings(showings);
     }
 
-    public void getRefund(int ticketID){
-
+    public User getUser(){
+        return user;
     }
 
-
- /*   public void displayShowings(showingList s){
-
+    public void addTicket(Ticket ticket){
+        tickets.add(ticket);
     }
 
-  */
+    public void setTickets(ArrayList<Ticket> tickets){
+        ticketView.addTickets(tickets);
+    }
 
     public void displayAccountBalance(){
-
+        ticketView.setBalance(user.getAccountBalance());
     }
 
-    public void addBalance(User u, int amount){
-
+    public void setTicketView(TicketView ticketView){
+        this.ticketView = ticketView;
     }
 
-  /*  public class TicketListener implements ActionListener {
+    public void setUser(User user){
+        this.user = user;
+    }
 
+    public void setActionListener(){
+        ticketView.addActionListener(new TicketListener());
+    }
+
+    class TicketListener implements ActionListener{
+        @Override
         public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == ticketView.getRefundButton()){
+                Ticket ticket = ticketView.getSelectedTicket();
+                if (ticket.getShowing().getDate().getTime() - todayMillis > 259200000)
+                    refundTicket(ticket);
+                else{
+                    ticketView.cantRefund();
+                }
 
+            }
         }
-
     }
-*/
 }

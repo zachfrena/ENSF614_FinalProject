@@ -23,14 +23,15 @@ CREATE TABLE USERS(
     Email varchar(30) not null,
     IsRegistered boolean not null,
     AccountBalance integer not null,
+    CcNum     varchar(25) not null,
     primary key (Username)
 );
 
-INSERT INTO USERS(Username, FName, LName, Email, IsRegistered, AccountBalance)
+INSERT INTO USERS(Username, FName, LName, Email, IsRegistered, AccountBalance, CcNum)
 VALUES
-("dunefan", "Evan", "Cooksley", "ecooksley@aol.com", True, 0),
-("kelten2", "Kelten", "Falez", "kfalez@aol.com", True, 0),
-("ghostbuster", "Zach", "Frena", "zfrena@aol.com", True, 0);
+("dunefan", "Evan", "Cooksley", "ecooksley@aol.com", True, 0, 131331444687923),
+("kelten2", "Kelten", "Falez", "kfalez@aol.com", True, 0, 131231444687923),
+("ghostbuster", "Zach", "Frena", "zfrena@aol.com", True,0 , 131231444687923);
 
 DROP TABLE IF EXISTS SHOWING;
 CREATE TABLE SHOWING (
@@ -45,13 +46,16 @@ CREATE TABLE SHOWING (
 
 INSERT INTO SHOWING(ShowingID, MovieID, TheDate, ShowingTime, Theatre)
 VALUES
-(5, 1, "2021-12-05", "16:00:00", "One"),
-(6, 2, "2021-12-04", "15:00:00", "One"),
-(8, 3, "2021-12-03", "17:00:00", "One");
+(1, 1, "2021-12-31", "16:00:00", "Theatre 1"),
+(2, 2, "2021-12-18", "11:00:00", "Theatre 2"),
+(3, 3, "2021-12-23", "18:00:00", "Theatre 2"),
+(4, 1, "2021-12-24", "14:00:00", "Theatre 3"),
+(5, 2, "2021-12-19", "15:00:00", "Theatre 3"),
+(6, 3, "2021-12-17", "05:00:00", "Theatre 1");
     
 DROP TABLE IF EXISTS TICKET;
 CREATE TABLE TICKET (
-	TicketID		integer not null,
+	TicketID		integer auto_increment not null ,
     ShowingID		integer not null,
     Username		varchar(15) not null,
     Seat			integer not null,
@@ -60,9 +64,10 @@ CREATE TABLE TICKET (
     foreign key (Username) references USERS(Username)
 );
 
-INSERT INTO TICKET(TicketID, ShowingID, Username, Seat)
+INSERT INTO TICKET(ShowingID, Username, Seat)
 VALUES
-(1, 5, "dunefan", 1),
-(2, 6, "kelten2", 2),
-(3, 8, "ghostbuster", 3);
+(1, "dunefan", 1), -- MP >3 weeks theatre 1     not gunna show!
+(3, "kelten2", 2), -- GB 2-3 theatre 2
+(3, "kelten2", 3), -- GB 2-3 theatre 2
+(4, "ghostbuster", 3); -- MP 2-3 weeks theatre 3
     

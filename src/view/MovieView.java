@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.border.EmptyBorder;
+import Model.Movies;
 
 public class MovieView extends JPanel{
 	private JComboBox movieSelector;
@@ -14,19 +15,18 @@ public class MovieView extends JPanel{
 	private JComboBox timeSelector;
 	private JButton movieButton;
 	private JButton theatreButton;
-	private JButton timeButton;
 	private JButton backButton;
 	private JButton confirmButton;
-	private ArrayList<String> movieList;
-	private ArrayList<String> theatreList;
-	private ArrayList<String> timeList;
+//	private ArrayList<String> movieList;
+//	private ArrayList<String> theatreList;
+//	private ArrayList<String> timeList;
 	
 	public MovieView() {
 		setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(new Insets(5,5,5,5)));
-		movieList = new ArrayList<String>();
-		theatreList = new ArrayList<String>();
-		timeList = new ArrayList<String>();
+		ArrayList<String> movieList = new ArrayList<String>();
+		ArrayList<String> theatreList = new ArrayList<String>();
+		ArrayList<String> timeList = new ArrayList<String>();
 		
 		JLabel title = new JLabel("Choose a Movie, Theatre, and Time");
 		title.setFont(new Font("Arial", Font.BOLD, 24));
@@ -37,16 +37,9 @@ public class MovieView extends JPanel{
 		topPanel.add(title);
 		title.setAlignmentX(CENTER_ALIGNMENT);
 		
-		// -------------------------FOR TESTING PURPOSES--------------------
-		String [] s1 = {"James Bond", "Matrix"};
-		String [] s2 = {"Theatre 1", "Theatre3"};
-		String [] s3 = {"6:30", "9:00"};
-		setMovieList(s1);
-		setTheatreList(s2);
-		setTimeList(s3);
-		//------------------------------------------------------------------
+
 		
-		movieSelector = new JComboBox(movieList.toArray());
+		movieSelector = new JComboBox();
 		movieSelector.setPreferredSize(new Dimension(300,25));
 		movieButton = new JButton("Select");
 		
@@ -55,9 +48,11 @@ public class MovieView extends JPanel{
 		moviePanel.add(Box.createRigidArea(new Dimension(10,0)));
 		moviePanel.add(movieButton);
 		
-		theatreSelector = new JComboBox(theatreList.toArray());
+		theatreSelector = new JComboBox();
 		theatreSelector.setPreferredSize(new Dimension(300,25));
+		theatreSelector.setEnabled(false);
 		theatreButton = new JButton("Select");
+		theatreButton.setEnabled(false);
 		
 		JPanel theatrePanel = new JPanel(new FlowLayout());
 		theatrePanel.add(theatreSelector);
@@ -65,14 +60,13 @@ public class MovieView extends JPanel{
 		theatrePanel.add(theatreButton);
 		
 		
-		timeSelector = new JComboBox(timeList.toArray());
+		timeSelector = new JComboBox();
 		timeSelector.setPreferredSize(new Dimension(300,25));
-		timeButton = new JButton("Select");
+		timeSelector.setEnabled(false);
 		
 		JPanel timePanel = new JPanel(new FlowLayout());
 		timePanel.add(timeSelector);
 		timePanel.add(Box.createRigidArea(new Dimension(10,0)));
-		timePanel.add(timeButton);
 		
 		
 		JPanel centerPanel = new JPanel();
@@ -86,6 +80,7 @@ public class MovieView extends JPanel{
 		
 		backButton = new JButton("Back");
 		confirmButton = new JButton("Confirm");
+		confirmButton.setEnabled(false);
 		
 		JPanel bottomPanel = new JPanel(new BorderLayout());
 		bottomPanel.add(backButton, BorderLayout.WEST);
@@ -97,23 +92,48 @@ public class MovieView extends JPanel{
 		
 		
 	}
-	
-	public void setMovieList(String [] strings) {
-		for (int i = 0; i < strings.length; i++) {
-			movieList.add(strings[i]);
+
+
+	public void addMovies(ArrayList<Movies> movies){
+		movieSelector.removeAllItems();
+		for (int i = 0; i < movies.size(); i++){
+			String title = movies.get(i).getTitle();
+			movieSelector.addItem(title);
 		}
 	}
-	
-	public void setTheatreList(String [] strings) {
-		for (int i = 0; i < strings.length; i++) {
-			theatreList.add(strings[i]);
+
+	public void addTheatres(ArrayList<String> theatres){
+		theatreSelector.removeAllItems();
+		for (int i = 0; i < theatres.size(); i++){
+			theatreSelector.addItem(theatres.get(i));
 		}
 	}
-	
-	public void setTimeList(String [] strings) {
-		for (int i = 0; i < strings.length; i++) {
-			timeList.add(strings[i]);
+
+	public void addTimes(ArrayList<String> times){
+		timeSelector.removeAllItems();
+		for (int i = 0; i < times.size(); i++){
+			timeSelector.addItem(times.get(i));
 		}
+	}
+
+	public void disableTheatres(){
+		theatreSelector.setEnabled(false);
+		theatreButton.setEnabled(false);
+	}
+
+	public void enableTheatres(){
+		theatreSelector.setEnabled(true);
+		theatreButton.setEnabled(true);
+	}
+
+	public void disableTimes(){
+		timeSelector.setEnabled(false);
+		confirmButton.setEnabled(false);
+	}
+
+	public void enableTimes(){
+		timeSelector.setEnabled(true);
+		confirmButton.setEnabled(true);
 	}
 	
 	public JButton getBackButton() {
@@ -123,7 +143,23 @@ public class MovieView extends JPanel{
 	public JButton getConfirmButton() {
 		return confirmButton;
 	}
-	
+
+	public JButton getMovieButton() {
+		return movieButton;
+	}
+
+	public JButton getTheatreButton(){
+		return theatreButton;
+	}
+
+	public JComboBox getMovieSelector(){
+		return movieSelector;
+	}
+
+	public JComboBox getTheatreSelector(){
+		return theatreSelector;
+	}
+
 	public void addMenuListener(ActionListener listener) {
 		backButton.addActionListener(listener);
 		confirmButton.addActionListener(listener);
@@ -133,7 +169,8 @@ public class MovieView extends JPanel{
 		confirmButton.addActionListener(listener);
 		movieButton.addActionListener(listener);
 		theatreButton.addActionListener(listener);
-		timeButton.addActionListener(listener);
+		movieSelector.addActionListener(listener);
+		theatreSelector.addActionListener(listener);
 	}
 	
 	public String getSelectedMovie() {

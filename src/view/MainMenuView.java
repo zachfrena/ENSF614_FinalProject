@@ -16,6 +16,7 @@ public class MainMenuView extends JPanel {
 	private JButton unregisterButton;
 	private JTextField balance;
 	private JLabel greeting;
+	private JPanel centerPanel;
 	private User user;
 	private boolean isRegistered;
 	
@@ -47,7 +48,7 @@ public class MainMenuView extends JPanel {
 		ticketButton = new JButton("View Tickets");
 		ticketButton.setPreferredSize(new Dimension(100,100));
 		
-		JPanel centerPanel = new JPanel(new BorderLayout(0, 40));
+		centerPanel = new JPanel(new BorderLayout(0, 40));
 		centerPanel.add(movieButton, BorderLayout.NORTH);
 		centerPanel.add(ticketButton, BorderLayout.CENTER);
 		centerPanel.add(Box.createRigidArea(new Dimension(0, 40)), BorderLayout.SOUTH);
@@ -90,6 +91,10 @@ public class MainMenuView extends JPanel {
 		}
 	}
 
+	public void chargeCreditCard(int amount){
+		JOptionPane.showMessageDialog(centerPanel, "$" + amount + " was charged to credit card " + user.getCreditNum());
+	}
+
 	public void setGreeting(){
 		greeting.setText("Signed in as: " + getUserName());
 	}
@@ -122,6 +127,9 @@ public class MainMenuView extends JPanel {
 			n = 0;
 		}
 		return n;
+	}
+	public void setAmount(String str){
+		amount.setText(str);
 	}
 	
 	public void setBalance(int balance) {

@@ -7,10 +7,10 @@ public class Ticket {
     private Showing showing; //pass integer (showingID) into DB
     private User user; //pass String (username) into DB
     private int seatNumber;
-    private int ticketId;
+//    private int ticketId;
 
-    public Ticket(int ticketId, Showing showing, User user, int seat){
-        this.ticketId = ticketId;
+    public Ticket(Showing showing, User user, int seat){
+//        this.ticketId = ticketId;
         this.showing=showing;
         this.user=user;
         this.seatNumber = seat;
@@ -20,11 +20,11 @@ public class Ticket {
         //email ticket here
     }
 
-    public void setTicketId(int ticketId) {
-        this.ticketId = ticketId;
-    }
+  //  public void setTicketId(int ticketId) {
+//        this.ticketId = ticketId;
+//    }
 
-    public int getTicketId() { return ticketId; }
+//    public int getTicketId() { return ticketId; }
 
     public Showing getShowing() {
         return showing;
@@ -48,7 +48,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-       return "Ticket ID: " + ticketId + "\nMovie: " + showing.getMovie().getTitle() + "\nSeat: " + seatNumber;
+       return showing.getMovie().getTitle() + " || " + showing.getTheatre() + " || " + showing.getTime()+ " || Seat: " + (seatNumber < 10 ? "0" + seatNumber : seatNumber);
     }
 }
 

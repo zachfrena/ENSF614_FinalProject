@@ -30,7 +30,7 @@ CREATE TABLE USERS(
 
 INSERT INTO USERS(Username, FName, LName, Email, IsRegistered, AccountBalance, CcNum)
 VALUES
-("dunefan", "Evan", "Cooksley", "ecooksley@aol.com", True, 35, 123456789),
+("dunefan", "Evan", "Cooksley", "ecooksley@aol.com", True, 180, 123456789),
 ("kelten2", "Kelten", "Falez", "kfalez@aol.com", False, 40, 987654321),
 ("MP4Lyfe", "David", "Cooksley", "d.cook@yahoo.com", True, 120, 456789123),
 ("user2", "Greg", "Gregory", "greg@greg.greg", False, 66, 741456963),

@@ -250,7 +250,9 @@ public class MovieController {
             }else if (e.getSource() == movieView.getConfirmButton()){
                 String movie = movieView.getSelectedMovie();
                 String theatre = movieView.getSelectedTheatre();
-                String time = movieView.getSelectedTime();
+                String dateTime = movieView.getSelectedTime();
+                String[] parts = dateTime.split(" ");
+                String time = parts[1];
                 setShowing(movie, theatre, time);
                 seatController.populateGUI();
             }

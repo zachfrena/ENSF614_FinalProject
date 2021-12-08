@@ -48,7 +48,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-       return showing.getMovie().getTitle() + " || " + showing.getTheatre() + " || " + showing.getTime()+ " || Seat: " + (seatNumber < 10 ? "0" + seatNumber : seatNumber);
+       return showing.getMovie().getTitle() + " || " + showing.getTheatre() + " || " + showing.getDate() + " || " + showing.getTime() + " || Seat: " + (seatNumber < 10 ? "0" + seatNumber : seatNumber);
     }
 }
 

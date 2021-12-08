@@ -218,7 +218,7 @@ public class MovieController {
         ArrayList<String> times = new ArrayList<String>();
         for (int i = 0; i < availableShowings.size(); i++){
             if (availableShowings.get(i).getMovie().getTitle().equals(movie) && availableShowings.get(i).getTheatre().equals(theatre)){
-                times.add(availableShowings.get(i).getTime().toString());
+                times.add(availableShowings.get(i).getDate().toString() + " " + availableShowings.get(i).getTime().toString());
             }
         }
         Collections.sort(times);

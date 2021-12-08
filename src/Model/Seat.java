@@ -3,11 +3,6 @@
  */
 package Model;
 
-import Controller.DBController;
-
-import java.sql.ResultSet;
-import java.util.ArrayList;
-
 public class Seat {
 
     private int seatNumber;

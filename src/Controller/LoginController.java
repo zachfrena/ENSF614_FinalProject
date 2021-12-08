@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class LoginController {
 
     private User loggedInUser;
-//    private DBController databaseController;
     private ExistingUsersList existingUsersList;
     private LoginView loginView;
 

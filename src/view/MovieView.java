@@ -24,16 +24,11 @@ public class MovieView extends JPanel{
 	private JButton theatreButton;
 	private JButton backButton;
 	private JButton confirmButton;
-//	private ArrayList<String> movieList;
-//	private ArrayList<String> theatreList;
-//	private ArrayList<String> timeList;
+
 	
 	public MovieView() {
 		setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(new Insets(5,5,5,5)));
-		ArrayList<String> movieList = new ArrayList<String>();
-		ArrayList<String> theatreList = new ArrayList<String>();
-		ArrayList<String> timeList = new ArrayList<String>();
 		
 		JLabel title = new JLabel("Choose a Movie, Theatre, and Time");
 		title.setFont(new Font("Arial", Font.BOLD, 24));

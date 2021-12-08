@@ -38,11 +38,11 @@ public class LoginView extends JPanel {
 		
 		JPanel inputField = new JPanel();
 		inputField.setLayout(new FlowLayout());
-//		inputField.add(Box.createRigidArea(new Dimension(10,0)));
+
 		inputField.add(iLabel);
 		inputField.add(Box.createRigidArea(new Dimension(5,0)));
 		inputField.add(input);
-//		inputField.add(Box.createRigidArea(new Dimension(10,0)));
+
 		
 
 		loginButton = new JButton("Login");

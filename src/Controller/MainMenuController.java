@@ -24,6 +24,7 @@ public class MainMenuController {
     private MainMenuView mainMenuView;
     private DBController dataBaseController;
 
+    
     public MainMenuController(DBController d){
         this.dataBaseController = d;
     }

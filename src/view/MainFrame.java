@@ -3,6 +3,11 @@ package view;
 import java.awt.CardLayout;
 import javax.swing.*;
 
+/**
+ * The MainFrame class acts as a central hub and frame for all of the different views,
+ * defining the base JFrame and facilitating the switching of views via setting cards.
+ */
+
 public class MainFrame extends JFrame implements Views {
 	private LoginView loginView;
 	private MainMenuView mainMenuView;

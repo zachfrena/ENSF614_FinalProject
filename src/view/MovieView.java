@@ -9,6 +9,13 @@ import java.util.ArrayList;
 import javax.swing.border.EmptyBorder;
 import Model.Movies;
 
+/**
+ * The MovieView class defines the layout of the Movie view where users can pick from a selection
+ * of movies, choose from available theatres, and then choose from available times to pull up the
+ * SeatView of the movie they are intending to purchase a ticket for.
+ */
+
+
 public class MovieView extends JPanel{
 	private JComboBox movieSelector;
 	private JComboBox theatreSelector;

@@ -1,3 +1,6 @@
+/**
+ * The DBLoginDetails interface allows a application users to enter the login credentials for the MySQL Database
+ */
 package Controller;
 
 public interface DBLoginDetails {
@@ -6,6 +9,6 @@ public interface DBLoginDetails {
 
     //  Database credentials
     static final String theUserName = "root";
-    static final String thePassword = "E1e2v3e4e5[]";
+    static final String thePassword = "Charlotte1";
 
 }

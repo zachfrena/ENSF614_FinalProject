@@ -9,6 +9,14 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.event.*;
 
+/**
+ * The SignUpView class defines the layout of the SignUpView where users who are not
+ * already registered into the database can sign up and enter their relevant details.
+ * It has fields to take their first name, last name, email, username, and credit card number,
+ * as well as a check box that allows the user to indicate if they want to become a Registered
+ * User.
+ */
+
 public class SignUpView extends JPanel{
 	private JTextField fName;
 	private JTextField lName;

@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * The LoginController class provides functionality for the application to login a given user.
+ */
 public class LoginController {
 
     private User loggedInUser;

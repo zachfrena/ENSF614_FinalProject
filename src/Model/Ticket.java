@@ -1,3 +1,6 @@
+/**
+ * The Ticket class represents a ticket object that ties the user, the showing, and the seat together.
+ */
 package Model;
 
 import java.util.ArrayList;

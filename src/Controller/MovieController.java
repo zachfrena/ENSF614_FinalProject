@@ -1,3 +1,7 @@
+/**
+ * The DBController class provides functionality for the application to read and write from the MySQL DataBase.
+ * Updating, setting, or retrieving data to be used in combination with user input is performed in this class.
+ */
 package Controller;
 
 import Model.*;

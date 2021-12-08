@@ -6,6 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * The LoginView class defines the layout of the Login view where users can enter their user name
+ * and either get taken to the MainMenuView, if their username is saved in the database, or the
+ * SignUpView, if they are a new user.
+ */
+
 public class LoginView extends JPanel {
 	private JTextField input;
 	private JButton loginButton;

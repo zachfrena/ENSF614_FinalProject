@@ -1,5 +1,9 @@
 package Model;
 
+/**
+ * The User class represents a user in the TicketApp.
+ *
+ */
 public class User {
     private String username;
     private String fName;
@@ -45,6 +49,7 @@ public class User {
         return accountBalance;
     }
 
+    // sets the account balance
     public void setAccountBalance(int accountBalance) {
         this.accountBalance = accountBalance;
     }

@@ -1,3 +1,6 @@
+/**
+ * The Seat class represents a seat object that can be reserved by a user.
+ */
 package Model;
 
 import Controller.DBController;
@@ -14,10 +17,12 @@ public class Seat {
         setSeatNumber(seatNumber);
     }
 
+    // boolean returns true if seat is taken
     public boolean isTaken() {
         return isTaken;
     }
 
+    //sets seat taken to true
     public void setTaken() {
         isTaken = true;
     }
@@ -31,6 +36,7 @@ public class Seat {
         return seatNumber;
     }
 
+    // sets seat number
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
     }

@@ -1,3 +1,7 @@
+/**
+ * The TicketView class represents a GUI page that shows the ticket objects that a user has previously booked,
+ * and provides information about the account balance.
+ */
 package view;
 
 import java.awt.*;

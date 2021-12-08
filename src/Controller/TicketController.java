@@ -1,3 +1,4 @@
+
 package Controller;
 
 import Model.Movies;
@@ -16,6 +17,10 @@ import java.time.LocalTime;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * The TicketController class provides functionality for the application to read user-inputted data and generate a new
+ * Ticket object.
+ */
 public class TicketController {
 
     private TicketView ticketView;

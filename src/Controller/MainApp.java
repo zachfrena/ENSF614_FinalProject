@@ -1,3 +1,6 @@
+/**
+ * The MainApp class provides functionality for running the application from the start.
+ */
 package Controller;
 
 import com.sun.tools.javac.Main;

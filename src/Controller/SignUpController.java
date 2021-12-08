@@ -1,3 +1,7 @@
+/**
+ * The SignUpController class provides functionality for the application to read user-inputted data and generate a new
+ * user object.
+ */
 package Controller;
 
 import Model.User;

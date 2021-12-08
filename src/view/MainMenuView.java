@@ -1,3 +1,6 @@
+/**
+ * The MainMenuView class sets the user-facing GUI for the main menu
+ */
 package view;
 
 

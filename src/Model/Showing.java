@@ -1,3 +1,8 @@
+/**
+ * The Showing Class represents the implementation of a user booking a movie and selecting a seat.
+ * This class contains an array of seats that will be updated everytime a movie is booked or refunded so that future
+ * users will have an updated selection of seats to view/select.
+ */
 package Model;
 
 import Controller.DBController;
@@ -25,10 +30,10 @@ public class Showing {
         this.movie = movie;
         allSeats = new ArrayList<Seat>();
         makeSeats();
-        registeredSeats = 0;
+        registeredSeats = 0; //this variable tracks the number of seats booked by a registered user during the "privileged period" (i.e. between 2-3 weeks prior to the showing date)
     }
 
-    public void makeSeats() {
+    public void makeSeats() { //20 seats per showing is generated
         for(int i = 0; i < 20; i++) {
             allSeats.add(new Seat(i));
         }
@@ -38,6 +43,7 @@ public class Showing {
         return registeredSeats;
     }
 
+    // increments registered seats by 1
     public void incrementRegisteredSeats(){
         registeredSeats += 1;
     }

@@ -1,3 +1,7 @@
+/**
+ * The DBController class provides functionality for the application to read and write from the MySQL DataBase.
+ * Updating, setting, or retrieving data to be used in combination with user input is performed in this class.
+ */
 package Controller;
 
 import Model.*;
@@ -16,6 +20,7 @@ public class DBController implements DBLoginDetails {
         establishConnection();
     }
 
+    // establishes connection to database
     public void establishConnection() {
         try {
             Driver driver = new com.mysql.cj.jdbc.Driver();
@@ -26,7 +31,7 @@ public class DBController implements DBLoginDetails {
             e.printStackTrace();
         }
     }
-
+    // closes the connection
     public void close() {
         try {
             con.close();
@@ -34,7 +39,7 @@ public class DBController implements DBLoginDetails {
             e.printStackTrace();
         }
     }
-
+    // selects all for the given table parameter
     public ResultSet readAllTables(String theTable) {
         try {
             String query = "SELECT * FROM " + theTable + ";";
@@ -45,7 +50,7 @@ public class DBController implements DBLoginDetails {
         }
         return res;
     }
-
+    // selects all movies where based on given movieId parameter
     public ResultSet readMovies(int movieId) {
         try {
             String query = "SELECT * FROM MOVIE WHERE MovieID = " + movieId + ";";
@@ -67,7 +72,7 @@ public class DBController implements DBLoginDetails {
         }
         return res;
     }
-
+    // selects all tickets based on given username parameter
     public ResultSet readTickets(User user) {
         String username = user.getUsername();
         try {
@@ -82,7 +87,7 @@ public class DBController implements DBLoginDetails {
         return res;
 
     }
-
+    // saves/inserts given user to the database
     public ResultSet saveUserToDB(User user) {
         String username = user.getUsername();
         String fname = user.getFirstName();
@@ -109,7 +114,7 @@ public class DBController implements DBLoginDetails {
         }
         return res;
     }
-
+    // saves/inserts given ticket object to the database
     public void saveTicketToDB(Ticket ticket) {
         int showingId = ticket.getShowing().getShowingID();
         String username = ticket.getUser().getUsername();
@@ -127,7 +132,7 @@ public class DBController implements DBLoginDetails {
         }
 
     }
-
+    // deletes the ticket from the database
     public void refundTicket(Ticket ticket){
         int showingId = ticket.getShowing().getShowingID();
         int seatNumber = ticket.getSeatNumber();
@@ -142,7 +147,7 @@ public class DBController implements DBLoginDetails {
             e.printStackTrace();
         }
     }
-
+    // updates user table and sets registered user to false
     public void setToNonRegistered(User user) {
         try {
             String query = "UPDATE USERS SET IsRegistered=False WHERE Username = ?" ;
@@ -154,7 +159,7 @@ public class DBController implements DBLoginDetails {
         }
     }
 
-
+    // updates account balance for given user in user table
     public void updateDataBaseBalance(User user) {
         int accountBalance = user.getAccountBalance();
         try {

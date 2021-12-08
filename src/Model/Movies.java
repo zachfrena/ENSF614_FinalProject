@@ -1,3 +1,7 @@
+/**
+ * The Movies class represents a single movie in the application. There is also comparison methods built in that
+ * allows 2 movies to be compared to eachother.
+ */
 package Model;
 
 import java.util.ArrayList;
@@ -15,7 +19,7 @@ public class Movies {
         this.title = title;
 
     }
-
+    // adds showing
     public void addShowing(Showing show) {
         showingList.add(show);
     }
@@ -36,6 +40,7 @@ public class Movies {
         this.movieId = movieId;
     }
 
+    // returns list of showings for the movie
     public ArrayList<Showing> getShowings() {
         return showingList;
     }

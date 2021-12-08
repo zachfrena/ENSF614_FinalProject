@@ -1,3 +1,7 @@
+/**
+ * The SeatView is a class that is used to display the seats of a showing to the application user
+ */
+
 package view;
 
 import java.awt.*;
@@ -8,6 +12,11 @@ import Model.Seat;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+/**
+ * The SeatView class defines the layout of the Seat view where users can graphically
+ * choose what seat they want to reserve for a movie.
+ */
 
 public class SeatView extends JPanel{
 	private ArrayList<JButton> seatButtons;

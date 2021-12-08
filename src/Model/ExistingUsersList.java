@@ -1,5 +1,7 @@
 package Model;
-
+/**
+/* The ExistingUsersList class represents a list of users that exist in the database
+ */
 import Controller.DBController;
 
 import java.sql.ResultSet;

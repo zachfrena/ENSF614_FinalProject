@@ -1,3 +1,7 @@
+/**
+ * The MainMenuController class allows information on the main page of the GUI to be updated, set, and retrieved.
+ */
+
 package Controller;
 
 import Model.Showing;

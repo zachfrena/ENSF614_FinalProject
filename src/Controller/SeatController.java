@@ -1,3 +1,6 @@
+/**
+ * The SeatController class provides functionality for the application to read and write information regarding seats.
+ */
 package Controller;
 
 import Model.Showing;

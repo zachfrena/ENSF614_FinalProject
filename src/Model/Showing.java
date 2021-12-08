@@ -41,6 +41,10 @@ public class Showing {
     public void incrementRegisteredSeats(){
         registeredSeats += 1;
     }
+    
+    public void decrementRegisteredSeats() {
+    	registeredSeats -=1;
+    }
 
     public Date getDate(){
         return showingDate;

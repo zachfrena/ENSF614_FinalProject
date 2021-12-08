@@ -102,6 +102,8 @@ public class TicketController {
         ticketView.addTickets(tickets);
         int index = showings.indexOf(ticket.getShowing());
         showings.get(index).getAllSeats().get(ticket.getSeatNumber()).setSeatNotTaken();
+        if (user.isRegistered())
+        	showings.get(index).decrementRegisteredSeats();
         movieController.setShowings(showings);
     }
 

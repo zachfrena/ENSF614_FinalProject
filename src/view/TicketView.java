@@ -28,7 +28,7 @@ public class TicketView extends JPanel{
 		
 
 		ticketSelector = new JComboBox();
-		ticketSelector.setPreferredSize(new Dimension(400,30));
+		ticketSelector.setPreferredSize(new Dimension(500,30));
 		
 		refundButton = new JButton("Refund");
 		refundButton.setPreferredSize(new Dimension(80,30));

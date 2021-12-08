@@ -94,9 +94,13 @@ public class MainMenuView extends JPanel {
 	public void chargeCreditCard(int amount){
 		JOptionPane.showMessageDialog(centerPanel, "$" + amount + " was charged to credit card " + user.getCreditNum());
 	}
+	
+	public void limitedFunds() {
+		JOptionPane.showMessageDialog(centerPanel, "You need at least $20 to purchase a ticket. Please add more money to your account.");
+	}
 
 	public void setGreeting(){
-		greeting.setText("Signed in as: " + getUserName());
+		greeting.setText("Signed in as "+ (user.isRegistered() ? "Registered User: " : "User: " ) + getUserName());
 	}
 
 	public void setUser(User user){
@@ -151,6 +155,7 @@ public class MainMenuView extends JPanel {
 	public void addActionListener(ActionListener listener) {
 		addButton.addActionListener(listener);
 		unregisterButton.addActionListener(listener);
+		movieButton.addActionListener(listener);
 	}
 	
 

@@ -35,7 +35,6 @@ public class LoginController {
                 return;
             }
         }
-        System.out.println("User does not exist.");
     }
 
 

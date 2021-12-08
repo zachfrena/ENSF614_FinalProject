@@ -71,8 +71,8 @@ public class MainMenuController {
     public void cancelRegistration() {
         user.setRegistered(false);
         mainMenuView.setIsRegistered(user.isRegistered());
+        mainMenuView.setGreeting();
         dataBaseController.setToNonRegistered(user);
-        System.out.println("Registration cancelled:" + user.getUsername() + " " + user.isRegistered());
     }
 
     class MainMenuListener implements ActionListener {
@@ -86,6 +86,10 @@ public class MainMenuController {
                 mainMenuView.setAmount("");
             } else if (e.getSource() == mainMenuView.getUnregisterButton()){
                 cancelRegistration();
+            } else if (e.getSource() == mainMenuView.getMovieButton()) {
+            	if(!checkBalance()) {
+            		mainMenuView.limitedFunds();
+            	}
             }
         }
     }

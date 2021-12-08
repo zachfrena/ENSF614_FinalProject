@@ -68,7 +68,6 @@ public class MovieController {
     }
 
     public void setMovies(){
-        System.out.println("SetMovies");
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
@@ -78,7 +77,6 @@ public class MovieController {
         long todayMillis = cal.getTimeInMillis();
         availableShowings = new ArrayList<Showing>();
         availableShowings.clear();
-        System.out.println("Point 1" + availableShowings);
         for (int i = 0; i < showings.size(); i++){
             if ((showings.get(i).getDate().getTime() - todayMillis) < 1209600000) {
                 Showing showing = showings.get(i);
@@ -89,7 +87,6 @@ public class MovieController {
                     continue;
                 } else{
                     if (user.isRegistered() && showings.get(i).getRegisteredSeats() < 2){
-                        System.out.println(showings.get(i).getRegisteredSeats());
                         Showing showing = showings.get(i);
                         availableShowings.add(showing);
                     } else {
